@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     default: "독독 — 독서를 두드리다",
     template: "%s | 독독",
   },
-  description: "읽고, 느끼고, 기록하다. 나만의 독서 기록과 독서 모임을 위한 웹앱",
+  description: "함께 읽고, 함께 기록하다. 독서 모임 전용 기록 웹앱",
   keywords: ["독서", "독서 기록", "독서 모임", "책 리뷰", "독독"],
   openGraph: {
     title: "독독 — 독서를 두드리다",
-    description: "읽고, 느끼고, 기록하다. 나만의 독서 기록과 독서 모임을 위한 웹앱",
+    description: "함께 읽고, 함께 기록하다. 독서 모임 전용 기록 웹앱",
     type: "website",
     locale: "ko_KR",
     siteName: "독독",

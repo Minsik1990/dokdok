@@ -111,6 +111,11 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
                 <p className="truncate text-sm font-medium">{book.title}</p>
                 <p className="text-muted-foreground truncate text-xs">{book.author}</p>
                 <p className="text-muted-foreground text-xs">{book.publisher}</p>
+                {book.description && (
+                  <p className="text-muted-foreground mt-1 line-clamp-2 text-xs leading-relaxed">
+                    {book.description}
+                  </p>
+                )}
               </div>
             </button>
           ))}

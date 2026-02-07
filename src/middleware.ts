@@ -1,81 +1,44 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createServerClient } from "@supabase/ssr";
 
-const PUBLIC_PATHS = ["/invite", "/login", "/auth/callback", "/api/invite/verify"];
+// 정확히 일치해야 하는 공개 경로
+const PUBLIC_EXACT = ["/", "/api/club", "/api/club/verify", "/api/club/leave", "/api/books/search"];
+// prefix 일치 허용 경로
+const PUBLIC_PREFIX = ["/admin"];
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 공개 경로는 통과
-  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
-    return createSupabaseResponse(request);
-  }
-
-  // 정적 파일, _next 등은 통과
-  if (pathname.startsWith("/_next") || pathname.startsWith("/favicon") || pathname.includes(".")) {
+  // 공개 경로 통과
+  if (
+    PUBLIC_EXACT.includes(pathname) ||
+    PUBLIC_PREFIX.some((p) => pathname === p || pathname.startsWith(p + "/"))
+  ) {
     return NextResponse.next();
   }
 
-  // Supabase 세션 확인
-  const { supabase, response } = createSupabaseClient(request);
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.redirect(new URL("/invite", request.url));
+  // 정적 파일 통과
+  if (pathname.startsWith("/_next") || pathname.includes(".")) {
+    return NextResponse.next();
   }
 
-  // 프로필 확인 (닉네임 설정 여부)
-  if (pathname !== "/onboarding") {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("nickname")
-      .eq("id", user.id)
-      .single();
+  // /club/[id]/* 또는 /api/club/[id]/* 경로: 쿠키에서 club_id 확인
+  const clubMatch = pathname.match(/^\/(?:api\/)?club\/([^/]+)/);
+  if (clubMatch) {
+    const urlClubId = clubMatch[1];
+    const cookieClubId = request.cookies.get("club_id")?.value;
 
-    if (!profile) {
-      return NextResponse.redirect(new URL("/onboarding", request.url));
+    if (!cookieClubId || cookieClubId !== urlClubId) {
+      // API 경로는 403 반환, 페이지 경로는 리다이렉트
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json({ error: "권한이 없습니다." }, { status: 403 });
+      }
+      return NextResponse.redirect(new URL("/", request.url));
     }
   }
 
-  return response;
-}
-
-function createSupabaseClient(request: NextRequest) {
-  let response = NextResponse.next({
-    request: { headers: request.headers },
-  });
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-          response = NextResponse.next({
-            request: { headers: request.headers },
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
-
-  return { supabase, response };
-}
-
-function createSupabaseResponse(request: NextRequest) {
-  const { response } = createSupabaseClient(request);
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|logo.png).*)"],
 };

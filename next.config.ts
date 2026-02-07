@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "image.aladin.co.kr",
       },
+      {
+        protocol: "https",
+        hostname: "nxofxjputwsgbujbjlus.supabase.co",
+      },
     ],
     // 도서 커버 이미지에 최적화된 사이즈 설정
     deviceSizes: [640, 750, 828, 1080, 1200],
