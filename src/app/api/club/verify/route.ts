@@ -42,7 +42,12 @@ export async function POST(request: NextRequest) {
     .eq("access_code", accessCode)
     .maybeSingle();
 
-  if (error || !club) {
+  if (error) {
+    console.error("verify error:", error.message);
+    return NextResponse.json({ error: "서버 오류가 발생했습니다." }, { status: 500 });
+  }
+
+  if (!club) {
     return NextResponse.json({ error: "존재하지 않는 접속 코드입니다." }, { status: 404 });
   }
 
