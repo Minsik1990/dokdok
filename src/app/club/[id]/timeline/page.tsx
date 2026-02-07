@@ -48,7 +48,7 @@ export default async function TimelinePage({ params }: { params: Promise<{ id: s
 
   return (
     <div className="space-y-3">
-      {typedSessions.map((session) => (
+      {typedSessions.map((session, index) => (
         <Link
           key={session.id}
           href={`/club/${clubId}/session/${session.id}`}
@@ -75,10 +75,10 @@ export default async function TimelinePage({ params }: { params: Promise<{ id: s
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
               <h3 className="truncate text-sm font-semibold">
-                {session.books?.title ?? `제${session.session_number}회 모임`}
+                {session.books?.title ?? `제${typedSessions.length - index}회 모임`}
               </h3>
               <span className="bg-secondary text-secondary-foreground flex-shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium">
-                #{session.session_number}
+                #{typedSessions.length - index}
               </span>
             </div>
             {session.books?.author && (
