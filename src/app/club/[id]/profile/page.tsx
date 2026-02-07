@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import { BookOpen, Calendar, Users, Mic, UserCheck, ImageIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { PresenterChart } from "@/components/features/presenter-chart";
 import type { Database } from "@/lib/supabase/database.types";
 
 type Club = Database["public"]["Tables"]["clubs"]["Row"];
@@ -143,7 +142,20 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
               <Mic className="text-primary h-4 w-4" />
               발제자 통계
             </h3>
-            <PresenterChart data={presenterStats} />
+            <div className="flex flex-wrap gap-2">
+              {presenterStats.map((m) => (
+                <Badge
+                  key={m.name}
+                  variant="secondary"
+                  className="gap-1.5 rounded-full py-1.5 pr-2.5 pl-3"
+                >
+                  {m.name}
+                  <span className="bg-primary/10 text-primary inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-bold">
+                    {m.count}
+                  </span>
+                </Badge>
+              ))}
+            </div>
           </CardContent>
         </Card>
       )}
