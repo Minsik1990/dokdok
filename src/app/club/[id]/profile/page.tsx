@@ -90,7 +90,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
             )}
             {firstDate && (
               <p className="text-muted-foreground mt-1.5 text-xs">
-                {formatDate(firstDate)} ~ {formatDate(today)}
+                {formatDate(firstDate)} ~ {formatDate(today)} ({daysBetween(firstDate, today)}일)
               </p>
             )}
           </div>
@@ -213,6 +213,12 @@ function getKSTDate() {
   return new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }))
     .toISOString()
     .split("T")[0];
+}
+
+function daysBetween(startStr: string, endStr: string) {
+  const start = new Date(startStr);
+  const end = new Date(endStr);
+  return Math.max(Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)), 1);
 }
 
 function formatDate(dateStr: string) {
