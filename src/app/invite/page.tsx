@@ -47,7 +47,7 @@ export default function InvitePage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <p className="text-muted-foreground text-center text-sm">
-                베타 테스트 중이에요. 초대 코드를 입력해주세요.
+                오늘 하루도 행복한 하루 보내세요. 초대 코드를 입력해주세요.
               </p>
               <Input
                 type="text"
