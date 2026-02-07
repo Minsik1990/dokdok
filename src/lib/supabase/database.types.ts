@@ -12,6 +12,31 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       agent_conversations: {
@@ -21,8 +46,10 @@ export type Database = {
           created_at: string | null
           id: string
           messages: Json
-          nickname: string
+          nickname: string | null
+          result: string | null
           session_id: string | null
+          title: string | null
           updated_at: string | null
           user_id: string | null
         }
@@ -32,8 +59,10 @@ export type Database = {
           created_at?: string | null
           id?: string
           messages?: Json
-          nickname: string
+          nickname?: string | null
+          result?: string | null
           session_id?: string | null
+          title?: string | null
           updated_at?: string | null
           user_id?: string | null
         }
@@ -43,8 +72,10 @@ export type Database = {
           created_at?: string | null
           id?: string
           messages?: Json
-          nickname?: string
+          nickname?: string | null
+          result?: string | null
           session_id?: string | null
+          title?: string | null
           updated_at?: string | null
           user_id?: string | null
         }
@@ -282,18 +313,21 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          bio: string | null
           created_at: string | null
           id: string
           nickname: string
         }
         Insert: {
           avatar_url?: string | null
+          bio?: string | null
           created_at?: string | null
           id: string
           nickname: string
         }
         Update: {
           avatar_url?: string | null
+          bio?: string | null
           created_at?: string | null
           id?: string
           nickname?: string
@@ -671,6 +705,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
