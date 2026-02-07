@@ -78,7 +78,7 @@
 | **HITL** (Human-in-the-Loop) | AI가 옵션 제안, 인간이 실행 전 검증    | 고위험 작업 (DB 스키마, 인증, 배포)          |
 | **HOTL** (Human-on-the-Loop) | 시스템 자율 운영, 인간이 모니터링/개입 | 저위험 반복 작업 (린트, 포맷팅, 간단한 CRUD) |
 
-**Mingdle 프로젝트 권장:**
+**Chaekdam 프로젝트 권장:**
 
 - DB 마이그레이션, Auth 설정: HITL
 - UI 컴포넌트, 유틸 함수, 테스트 작성: HOTL
@@ -104,10 +104,10 @@
 
 ```bash
 # Vercel 공식 템플릿으로 시작 (권장)
-npx create-next-app -e with-supabase mingdle
+npx create-next-app -e with-supabase chaekdam
 
 # 또는 수동 설정
-npx create-next-app@latest mingdle --typescript --tailwind --eslint --app --src-dir
+npx create-next-app@latest chaekdam --typescript --tailwind --eslint --app --src-dir
 npm install @supabase/supabase-js @supabase/ssr
 ```
 
@@ -155,7 +155,7 @@ export const config = {
 
 ### 2.5 인증 전략
 
-| 방법                      | 장점                  | Mingdle 권장               |
+| 방법                      | 장점                  | Chaekdam 권장              |
 | ------------------------- | --------------------- | -------------------------- |
 | **OAuth** (Google, Kakao) | 보안 + 사용 편의 균형 | 1순위 -- Kakao 한국 사용자 |
 | **Magic Link**            | 가장 간단한 UX        | 2순위 -- 이메일 기반       |
@@ -187,7 +187,7 @@ npx supabase gen types typescript --project-id your-project-id > types/supabase.
 > "PRD가 정적 문서에서 AI 에이전트와 인간 팀 모두를 체계적으로 안내하는 **살아있는 문서**로 변해야 한다."
 > -- [UXPin, Structure AI-Assisted Development with PRDs](https://www.uxpin.com/studio/blog/structure-ai-assisted-development-prds/)
 
-### 3.2 권장 PRD 템플릿 (Mingdle 맞춤)
+### 3.2 권장 PRD 템플릿 (Chaekdam 맞춤)
 
 ```markdown
 # [기능명] PRD
@@ -332,7 +332,7 @@ Phase 4: Commit (커밋)
 **핵심 원칙:** 모든 단어가 컨텍스트 토큰을 소비 -- **50-100줄**, 최대 300줄
 
 ```markdown
-# CLAUDE.md 예시 (Mingdle 프로젝트)
+# CLAUDE.md 예시 (Chaekdam 프로젝트)
 
 # 프로젝트 개요
 
@@ -442,7 +442,7 @@ Claude Code의 **가장 중요한 리소스는 컨텍스트 윈도우**:
 | `/rewind`                    | 이전 체크포인트로 대화/코드 복원                                          |
 | 2번 수정 후 실패 시 `/clear` | 실패한 접근법이 컨텍스트 오염 → 깨끗한 세션에서 더 나은 프롬프트로 재시작 |
 
-### 4.5 Mingdle 프로젝트 개발 사이클
+### 4.5 Chaekdam 프로젝트 개발 사이클
 
 ```
 매일의 개발 루프:
@@ -466,7 +466,7 @@ Claude Code의 **가장 중요한 리소스는 컨텍스트 윈도우**:
 
 ## 5. Monorepo vs Single App
 
-### 5.1 결론: Mingdle은 Single App으로 시작
+### 5.1 결론: Chaekdam은 Single App으로 시작
 
 | 기준                    | Single App    | Monorepo               |
 | ----------------------- | ------------- | ---------------------- |
@@ -527,7 +527,7 @@ Claude Code의 **가장 중요한 리소스는 컨텍스트 윈도우**:
 - 동기 Server/Client Components는 단위 테스트 가능
 - Vitest는 `@vitejs/plugin-react`와 함께 설정
 
-### 6.4 핵심 E2E 시나리오 (Mingdle)
+### 6.4 핵심 E2E 시나리오 (Chaekdam)
 
 ```
 1. 회원가입 → 로그인 → 프로필 설정
@@ -550,7 +550,7 @@ Claude Code의 **가장 중요한 리소스는 컨텍스트 윈도우**:
 
 ### 7.1 Vercel + GitHub 통합 (기본)
 
-**Mingdle 권장: Vercel Git Integration (기본) + GitHub Actions (테스트만)**
+**Chaekdam 권장: Vercel Git Integration (기본) + GitHub Actions (테스트만)**
 
 Vercel은 Git push 시 자동 배포를 기본 제공하므로, 배포 자체는 Vercel에 맡기고 GitHub Actions는 테스트/린트만 담당.
 
@@ -769,7 +769,7 @@ npx lint-staged
 
 ## 9. 실행 권장사항 요약
 
-### Mingdle 프로젝트에 적용할 핵심 결정
+### Chaekdam 프로젝트에 적용할 핵심 결정
 
 | 항목       | 결정                                    | 근거                                        |
 | ---------- | --------------------------------------- | ------------------------------------------- |

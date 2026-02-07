@@ -1,4 +1,4 @@
--- Mingdle v2 전면 개편 마이그레이션
+-- Chaekdam v2 전면 개편 마이그레이션
 -- 개인 독서 기록 중심 + Supabase Auth Magic Link
 
 -- 프로필 (Supabase Auth 연동)
@@ -149,4 +149,4 @@ create policy "invite_codes_select" on invite_codes for select using (true);
 create policy "invite_codes_update" on invite_codes for update using (auth.uid() is not null);
 
 -- 기본 베타 초대 코드 삽입
-insert into invite_codes (code) values ('mingdle2026') on conflict do nothing;
+insert into invite_codes (code) values ('chaekdam2026') on conflict do nothing;

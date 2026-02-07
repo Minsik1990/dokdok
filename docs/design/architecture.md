@@ -40,7 +40,7 @@
 ## 2. 프로젝트 구조
 
 ```
-mingdle/
+chaekdam/
 ├── docs/                          # 프로젝트 문서
 ├── src/
 │   ├── app/                       # Next.js App Router

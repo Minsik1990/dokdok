@@ -63,14 +63,14 @@ export default function OnboardingPage() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
-          <h1 className="text-primary text-2xl font-bold">밍들</h1>
+          <h1 className="text-primary text-2xl font-bold">책담</h1>
           <p className="text-muted-foreground text-sm">첫 번째 기록을 시작해볼까요?</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <p className="text-muted-foreground text-center text-sm">
-                밍들에서 사용할 이름을 알려주세요
+                책담에서 사용할 이름을 알려주세요
               </p>
               <Input
                 type="text"

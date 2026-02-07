@@ -80,14 +80,14 @@ npx supabase db push --project-ref your-project-ref
    - `https://your-domain.vercel.app/api/auth/callback`
 4. Authentication -> Email Templates
    - Magic Link 이메일 제목/본문 커스텀 (선택)
-   - 발신자 이름: "밍들" (선택)
+   - 발신자 이름: "책담" (선택)
 
 ### 초대 코드 생성
 
 ```sql
 -- SQL Editor에서 초기 초대 코드 생성
 INSERT INTO invite_codes (code, max_uses, is_active)
-VALUES ('MINGDLE2026', 50, true);
+VALUES ('CHAEKDAM2026', 50, true);
 ```
 
 ---

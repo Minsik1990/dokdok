@@ -5,7 +5,7 @@ tools: Read, Grep, Glob, Bash
 model: haiku
 ---
 
-Mingdle 프로젝트의 코드 변경사항을 리뷰합니다:
+책담(Chaekdam) 프로젝트의 코드 변경사항을 리뷰합니다:
 
 ## 체크리스트
 
@@ -18,7 +18,7 @@ Mingdle 프로젝트의 코드 변경사항을 리뷰합니다:
 
 ## 프로젝트 컨텍스트
 
-- Next.js 15 App Router + Supabase + Claude API
-- 색상: 그린(#7CB342), 노랑(#FFD54F), 핑크(#FFB5B5)
-- shadcn/ui (Maia 스타일), Tailwind CSS v4
+- Next.js 16 App Router + Supabase + Claude API
+- 색상: 코랄(#F4845F), 앰버(#FFB74D), 화이트(#FAFAFA)
+- shadcn/ui, Tailwind CSS v4
 - 무료 운영 제약 (Supabase Free, Vercel Hobby)

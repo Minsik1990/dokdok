@@ -2,8 +2,8 @@
 
 ## 프로젝트
 
-**Mingdle (밍들)** — 나의 독서 기록. 읽고, 느끼고, 기록하다.
-개인 독서 기록이 메인, 독서 모임은 부가 기능. AI는 도구형 에이전트 (캐릭터 없음).
+**책담 (Chaekdam)** — 나의 독서 기록. 읽고, 느끼고, 기록하다.
+책을 담다. 개인 독서 기록이 메인, 독서 모임은 부가 기능. AI는 도구형 에이전트 (캐릭터 없음).
 
 - Stack: Next.js 16 (App Router) + TypeScript strict + Tailwind CSS v4 + shadcn/ui
 - Backend: Supabase (PostgreSQL + RLS + Auth Magic Link) | 배포: Vercel
@@ -34,7 +34,7 @@ npx supabase gen types typescript --local > src/lib/supabase/database.types.ts  
 
 ## CRITICAL 제약
 
-- **Supabase 프로젝트**: project_id `nxofxjputwsgbujbjlus` (밍들) 전용
+- **Supabase 프로젝트**: project_id `nxofxjputwsgbujbjlus` (책담) 전용
 - **careguardian 조직/프로젝트 접근 절대 금지** — 다른 조직의 DB 조회/수정 불가
 - **RLS 필수**: 새 테이블에 반드시 RLS 활성화 + 사용자 기반 정책
 - **타입 재생성**: DB 변경 후 `supabase gen types` 실행

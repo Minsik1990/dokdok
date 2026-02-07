@@ -1,4 +1,4 @@
-# Mingdle v2 PRD (Product Requirements Document)
+# Chaekdam v2 PRD (Product Requirements Document)
 
 > 최종 업데이트: 2026-02-07
 > 상태: Draft
@@ -7,7 +7,7 @@
 
 ## 1. 서비스 컨셉
 
-**밍들 -- 나의 독서 기록. 읽고, 느끼고, 기록하다.**
+**책담 -- 나의 독서 기록. 읽고, 느끼고, 기록하다.**
 
 개인 독서 기록이 메인이며, 독서 모임은 부가 기능으로 제공한다.
 AI 독서 에이전트는 캐릭터 없이 깔끔한 도구형 조력자로 동작한다.

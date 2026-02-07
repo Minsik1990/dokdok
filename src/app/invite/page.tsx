@@ -40,7 +40,7 @@ export default function InvitePage() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
-          <h1 className="text-primary text-2xl font-bold">밍들</h1>
+          <h1 className="text-primary text-2xl font-bold">책담</h1>
           <p className="text-muted-foreground text-sm">나의 독서 기록</p>
         </CardHeader>
         <CardContent>

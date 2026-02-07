@@ -10,7 +10,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "밍들 — 나의 독서 기록",
+  title: "책담 — 나의 독서 기록",
   description: "읽고, 느끼고, 기록하다. 나만의 독서 기록과 독서 모임을 위한 웹앱",
 };
 
