@@ -1,17 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
+const COOLDOWN_SECONDS = 60;
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => {
+      setCooldown((prev) => {
+        if (prev <= 1) {
+          setError("");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
+  const startCooldown = useCallback(() => {
+    setCooldown(COOLDOWN_SECONDS);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,7 +49,12 @@ export default function LoginPage() {
       });
 
       if (authError) {
-        setError("이메일 전송에 실패했어요. 다시 시도해주세요.");
+        if (authError.status === 429) {
+          setError("요청이 너무 많아요. 잠시 후 다시 시도해주세요.");
+          startCooldown();
+        } else {
+          setError("이메일 전송에 실패했어요. 다시 시도해주세요.");
+        }
       } else {
         setSent(true);
       }
@@ -87,8 +113,16 @@ export default function LoginPage() {
               />
               {error && <p className="text-destructive text-center text-sm">{error}</p>}
             </div>
-            <Button type="submit" className="w-full" disabled={!email.trim() || loading}>
-              {loading ? "전송 중..." : "로그인 링크 받기"}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={!email.trim() || loading || cooldown > 0}
+            >
+              {loading
+                ? "전송 중..."
+                : cooldown > 0
+                  ? `${cooldown}초 후 다시 시도`
+                  : "로그인 링크 받기"}
             </Button>
           </form>
         </CardContent>

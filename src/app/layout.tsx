@@ -18,6 +18,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dokdok.day"),
   title: {
     default: "독독 — 독서를 두드리다",
     template: "%s | 독독",
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     siteName: "독독",
+    images: [{ url: "/logo.png", width: 800, height: 536, alt: "독독" }],
   },
   robots: {
     index: true,

@@ -22,13 +22,18 @@ export async function generateMetadata({
     .from("reading_groups")
     .select("name, description")
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if (!group) return { title: "모임" };
 
+  const description = group.description || `${group.name} 독서 모임`;
   return {
     title: group.name,
-    description: group.description || `${group.name} 독서 모임`,
+    description,
+    openGraph: {
+      title: `${group.name} | 독독`,
+      description,
+    },
   };
 }
 

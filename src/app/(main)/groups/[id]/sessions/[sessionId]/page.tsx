@@ -24,12 +24,17 @@ export async function generateMetadata({
     .from("sessions")
     .select("books(title, author)")
     .eq("id", sessionId)
-    .single()) as { data: { books: { title: string; author: string } | null } | null };
+    .maybeSingle()) as { data: { books: { title: string; author: string } | null } | null };
 
   const bookTitle = session?.books?.title ?? "독서 세션";
+  const description = `${bookTitle} 독서 모임 세션`;
   return {
     title: bookTitle,
-    description: `${bookTitle} 독서 모임 세션`,
+    description,
+    openGraph: {
+      title: `${bookTitle} | 독독`,
+      description,
+    },
   };
 }
 
