@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 
@@ -29,6 +29,15 @@ export function RecordActions({ recordId }: { recordId: string }) {
 
   return (
     <div className="flex gap-3">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => router.push(`/record/${recordId}/edit`)}
+        className="flex-1"
+      >
+        <Pencil className="mr-1 h-4 w-4" />
+        기록 수정
+      </Button>
       <Button
         variant="destructive"
         size="sm"

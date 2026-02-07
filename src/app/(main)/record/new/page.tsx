@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,7 @@ const STATUS_OPTIONS: { value: RecordStatus; label: string }[] = [
 
 export default function NewRecordPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [selectedBook, setSelectedBook] = useState<SelectedBook | null>(null);
   const [status, setStatus] = useState<RecordStatus>("reading");
   const [rating, setRating] = useState(0);
@@ -37,6 +38,22 @@ export default function NewRecordPage() {
   const [quote, setQuote] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // 검색 페이지에서 책을 선택해서 넘어온 경우 초기값 설정
+  useEffect(() => {
+    const title = searchParams.get("title");
+    const isbn = searchParams.get("isbn");
+    if (title && isbn) {
+      setSelectedBook({
+        title,
+        isbn,
+        author: searchParams.get("author") ?? "",
+        publisher: searchParams.get("publisher") ?? "",
+        coverUrl: searchParams.get("coverUrl") ?? "",
+        description: searchParams.get("description") ?? "",
+      });
+    }
+  }, [searchParams]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

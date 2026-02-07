@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { analysisPrompt } from "@/lib/agent/prompts";
-import { createAgentStream } from "@/lib/agent/stream";
-import { getCachedContent } from "@/lib/agent/cache";
+import { createAgentResponse } from "@/lib/agent/stream";
+import { getCachedContent, setCachedContent } from "@/lib/agent/cache";
 import type { BookContext } from "@/lib/agent/types";
 
 export async function POST(request: NextRequest) {
@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 캐시 없으면 스트리밍 생성
-    return createAgentStream({
+    // 캐시 없으면 비스트리밍으로 생성 후 캐시 저장
+    const analysis = await createAgentResponse({
       systemPrompt: analysisPrompt(bookContext),
       messages: [
         {
@@ -39,6 +39,15 @@ export async function POST(request: NextRequest) {
       ],
       model: "claude-sonnet-4-5-20250929",
       maxTokens: 2048,
+    });
+
+    // 캐시 저장 (bookId가 있는 경우)
+    if (bookId && analysis) {
+      await setCachedContent(bookId, "analysis", analysis, "claude-sonnet-4-5");
+    }
+
+    return new Response(JSON.stringify({ analysis }), {
+      headers: { "Content-Type": "application/json" },
     });
   } catch {
     return new Response(JSON.stringify({ error: "AI 기능을 잠시 사용할 수 없어요" }), {

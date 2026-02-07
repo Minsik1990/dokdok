@@ -26,93 +26,93 @@
 
 ### Step 0: 프로젝트 셋업
 
-- [ ] Next.js 15 + TypeScript + Tailwind CSS v4 + pnpm 초기화
-- [ ] shadcn/ui 초기화 (코랄 테마 커스텀)
-- [ ] Pretendard 폰트 설정
-- [ ] Supabase 프로젝트 생성 + 로컬 개발 환경
-- [ ] 환경 변수 설정 (.env.local)
-- [ ] ESLint + Prettier 설정
-- [ ] 프로젝트 폴더 구조 생성
+- [x] Next.js 16 + TypeScript + Tailwind CSS v4 + pnpm 초기화
+- [x] shadcn/ui 초기화 (코랄 테마 커스텀)
+- [x] Pretendard 폰트 설정
+- [x] Supabase 프로젝트 생성 + 로컬 개발 환경
+- [x] 환경 변수 설정 (.env.local)
+- [x] ESLint + Prettier 설정
+- [x] 프로젝트 폴더 구조 생성
 
 ### Step 1: 인증 + 온보딩
 
-- [ ] Supabase Auth Magic Link 설정
-- [ ] invite_codes 테이블 + RLS
-- [ ] profiles 테이블 + 자동 생성 트리거
-- [ ] /login 페이지 (초대 코드 -> 이메일)
-- [ ] /api/auth/callback (Magic Link 콜백)
-- [ ] /api/invite/verify (초대 코드 검증)
-- [ ] /onboarding 페이지 (닉네임 설정)
-- [ ] middleware.ts (미인증 리다이렉트)
+- [x] Supabase Auth Magic Link 설정
+- [x] invite_codes 테이블 + RLS
+- [x] profiles 테이블 + 자동 생성 트리거
+- [x] /login 페이지 (초대 코드 -> 이메일)
+- [x] /api/auth/callback (Magic Link 콜백)
+- [x] /api/invite/verify (초대 코드 검증)
+- [x] /onboarding 페이지 (닉네임 설정)
+- [x] middleware.ts (미인증 리다이렉트)
 
 ### Step 2: 도서 검색
 
-- [ ] books 테이블 + RLS
-- [ ] /api/books/search (네이버 API 프록시 + 캐싱)
-- [ ] BookSearch 컴포넌트 (검색 입력 + 결과 리스트)
-- [ ] 검색 결과 -> books 테이블 캐싱
+- [x] books 테이블 + RLS
+- [x] /api/books/search (네이버 API 프록시 + 캐싱)
+- [x] BookSearch 컴포넌트 (검색 입력 + 결과 리스트)
+- [x] 검색 결과 -> books 테이블 캐싱
 
 ### Step 3: 개인 기록
 
-- [ ] records 테이블 + RLS
-- [ ] RecordCard 컴포넌트
-- [ ] RecordForm 컴포넌트
-- [ ] StarRating 컴포넌트
-- [ ] StatusBadge 컴포넌트
-- [ ] 기록 CRUD Server Actions
-- [ ] /(main)/record/new 페이지
-- [ ] /(main)/record/[id] 페이지 (상세)
-- [ ] /(main)/record/[id]/edit 페이지 (수정)
+- [x] records 테이블 + RLS
+- [x] RecordCard 컴포넌트
+- [x] RecordForm 컴포넌트
+- [x] StarRating 컴포넌트
+- [x] StatusBadge 컴포넌트
+- [x] 기록 CRUD Server Actions
+- [x] /(main)/record/new 페이지
+- [x] /(main)/record/[id] 페이지 (상세)
+- [x] /(main)/record/[id]/edit 페이지 (수정)
 
 ### Step 4: 하단 탭 + 레이아웃
 
-- [ ] BottomNav 컴포넌트 (5개 탭 + safe-area)
-- [ ] (main) 레이아웃 (max-width: 480px + BottomNav)
-- [ ] /(main)/home 페이지 (최근 기록 + 통계)
-- [ ] /(main)/search 페이지 (도서 검색)
-- [ ] /(main)/profile 페이지 (내 기록 전체)
+- [x] BottomNav 컴포넌트 (5개 탭 + safe-area)
+- [x] (main) 레이아웃 (max-width: 480px + BottomNav)
+- [x] /(main)/home 페이지 (최근 기록 + 통계)
+- [x] /(main)/search 페이지 (도서 검색)
+- [x] /(main)/profile 페이지 (내 기록 전체)
 
 ### Step 5: AI 에이전트
 
-- [ ] agent_conversations 테이블 + RLS
-- [ ] ai_contents 테이블 + RLS
-- [ ] src/lib/agent/ 모듈 (client, prompts, stream, cache, types)
-- [ ] /api/agent/interview (대화형 기록)
-- [ ] /api/agent/summarize (요약)
-- [ ] /api/agent/topics (토론 주제)
-- [ ] /api/agent/draft (발제문 초안)
-- [ ] /api/agent/analysis (도서 분석)
-- [ ] InterviewChat 컴포넌트
-- [ ] AgentPanel 컴포넌트
+- [x] agent_conversations 테이블 + RLS
+- [x] ai_contents 테이블 + RLS
+- [x] src/lib/agent/ 모듈 (client, prompts, stream, cache, types)
+- [x] /api/agent/interview (대화형 기록)
+- [x] /api/agent/summarize (요약)
+- [x] /api/agent/topics (토론 주제)
+- [x] /api/agent/draft (발제문 초안)
+- [x] /api/agent/analysis (도서 분석 + 캐시 저장)
+- [x] InterviewChat 컴포넌트
+- [x] AgentPanel 컴포넌트
 
 ### Step 6: 독서 모임
 
-- [ ] reading_groups 테이블 + RLS
-- [ ] group_members 테이블 + RLS
-- [ ] sessions 테이블 + RLS
-- [ ] session_reviews 테이블 + RLS
-- [ ] /(main)/groups 페이지 (모임 목록)
-- [ ] /(main)/groups/new 페이지 (모임 생성)
-- [ ] /(main)/groups/[id] 페이지 (모임 상세)
-- [ ] /(main)/groups/[id]/sessions/[sessionId] 페이지 (세션 상세)
-- [ ] 모임 가입 (초대 코드)
-- [ ] 세션 후기 작성
+- [x] reading_groups 테이블 + RLS
+- [x] group_members 테이블 + RLS
+- [x] sessions 테이블 + RLS
+- [x] session_reviews 테이블 + RLS
+- [x] /(main)/groups 페이지 (모임 목록)
+- [x] /(main)/groups/new 페이지 (모임 생성)
+- [x] /(main)/groups/[id] 페이지 (모임 상세)
+- [x] /(main)/groups/[id]/sessions/[sessionId] 페이지 (세션 상세)
+- [x] 모임 가입 (초대 코드)
+- [x] 세션 후기 작성
 
 ### Step 7: 배포 + CI/CD
 
 - [ ] Vercel 배포 설정 (환경 변수 포함)
-- [ ] GitHub Actions CI (lint, typecheck, build)
-- [ ] Supabase Keep-Alive cron (3일마다)
+- [x] GitHub Actions CI (lint, typecheck, build)
+- [x] Supabase Keep-Alive cron (3일마다)
 - [ ] 기본 E2E 테스트 (Playwright)
 
 ### Step 8: 마무리 + QA
 
 - [ ] 반응형 검증 (480px 기준)
 - [ ] 빈 상태(empty state) UI 전체 점검
-- [ ] 로딩 상태(skeleton) UI 전체 점검
-- [ ] 에러 핸들링 전체 점검
+- [x] 로딩 상태(skeleton) UI 전체 점검
+- [x] 에러 핸들링 전체 점검 (에러 바운더리 + 404)
 - [ ] 성능 최적화 (이미지, 번들, 폰트)
-- [ ] 접근성 검증 (키보드 네비게이션, 색상 대비)
+- [x] 접근성 기본 (StarRating aria-label, BottomNav aria-current)
 
 ---
 
@@ -142,11 +142,11 @@
 
 ## 마일스톤 요약
 
-| 버전           | 목표                   | 상태      |
-| -------------- | ---------------------- | --------- |
-| **v1.0**       | 리서치 & 문서화        | 완료      |
-| **v2.0-alpha** | v2 설계 & 문서 개편    | 완료      |
-| **v2.0-beta**  | Phase 1 MVP (Step 0~8) | 진행 예정 |
-| **v2.0**       | Phase 1 MVP 출시       | 예정      |
-| **v2.1**       | Phase 2 확장           | 예정      |
-| **v3.0**       | Phase 3 고도화         | 예정      |
+| 버전           | 목표                   | 상태    |
+| -------------- | ---------------------- | ------- |
+| **v1.0**       | 리서치 & 문서화        | 완료    |
+| **v2.0-alpha** | v2 설계 & 문서 개편    | 완료    |
+| **v2.0-beta**  | Phase 1 MVP (Step 0~8) | 진행 중 |
+| **v2.0**       | Phase 1 MVP 출시       | 예정    |
+| **v2.1**       | Phase 2 확장           | 예정    |
+| **v3.0**       | Phase 3 고도화         | 예정    |
