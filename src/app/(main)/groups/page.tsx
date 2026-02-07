@@ -3,6 +3,7 @@ import { Plus, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/features/empty-state";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function GroupsPage() {
@@ -29,16 +30,16 @@ export default async function GroupsPage() {
       </div>
 
       {!memberships || memberships.length === 0 ? (
-        <div className="py-16 text-center">
-          <Users className="text-muted-foreground mx-auto mb-3 h-10 w-10" />
-          <p className="text-muted-foreground text-[15px]">참여 중인 독서 모임이 없어요</p>
-          <p className="text-muted-foreground mt-1 text-[13px]">
-            새 모임을 만들거나, 초대 코드로 참여해보세요
-          </p>
-          <Button asChild className="mt-4">
-            <Link href="/groups/new">첫 모임 만들기</Link>
-          </Button>
-        </div>
+        <EmptyState
+          icon={Users}
+          title="참여 중인 독서 모임이 없어요"
+          description="새 모임을 만들거나, 초대 코드로 참여해보세요"
+          action={
+            <Button asChild>
+              <Link href="/groups/new">첫 모임 만들기</Link>
+            </Button>
+          }
+        />
       ) : (
         <div className="space-y-3">
           {memberships.map((membership) => {
@@ -51,7 +52,7 @@ export default async function GroupsPage() {
             if (!group) return null;
             return (
               <Link key={group.id} href={`/groups/${group.id}`}>
-                <Card className="transition-all hover:shadow-md">
+                <Card className="transition-all hover:-translate-y-0.5 hover:shadow-sm">
                   <CardContent className="py-4">
                     <div className="flex items-start justify-between">
                       <div>

@@ -44,46 +44,45 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  /* 독독 커스텀 색상 — 포레스트/독서 테마 */
-  --color-forest: #2d6a4f;
-  --color-craft: #c9a96e;
-  --color-success: #66bb6a;
+  /* 독독 커스텀 색상 — 인디고/앰버 테마 */
+  --color-amber: #f59e0b;
+  --color-success: #10b981;
 }
 
 :root {
-  --radius: 0.75rem;
-  /* 독독 테마 — 포레스트그린 + 크래프트베이지 */
-  --background: #faf8f5;
-  --foreground: #1a1a1a;
+  --radius: 0.875rem;
+  /* 독독 테마 — 딥 인디고 + 앰버 (채널톡/토스 스타일) */
+  --background: #ffffff;
+  --foreground: #111827;
   --card: #ffffff;
-  --card-foreground: #1a1a1a;
+  --card-foreground: #111827;
   --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #2d6a4f;
+  --popover-foreground: #111827;
+  --primary: #4f46e5;
   --primary-foreground: #ffffff;
-  --secondary: #edf5f0;
-  --secondary-foreground: #1b4332;
-  --muted: #f2f0ed;
-  --muted-foreground: #8b8579;
-  --accent: #c9a96e;
-  --accent-foreground: #3d2e0f;
-  --destructive: #dc3545;
-  --border: #e8e4df;
-  --input: #f2f0ed;
-  --ring: #2d6a4f;
-  --chart-1: #2d6a4f;
-  --chart-2: #c9a96e;
-  --chart-3: #66bb6a;
-  --chart-4: #42a5f5;
-  --chart-5: #8b6f47;
-  --sidebar: #faf8f5;
-  --sidebar-foreground: #1a1a1a;
-  --sidebar-primary: #2d6a4f;
+  --secondary: #eef2ff;
+  --secondary-foreground: #3730a3;
+  --muted: #f9fafb;
+  --muted-foreground: #6b7280;
+  --accent: #f59e0b;
+  --accent-foreground: #78350f;
+  --destructive: #ef4444;
+  --border: #e5e7eb;
+  --input: #f9fafb;
+  --ring: #4f46e5;
+  --chart-1: #4f46e5;
+  --chart-2: #f59e0b;
+  --chart-3: #10b981;
+  --chart-4: #3b82f6;
+  --chart-5: #8b5cf6;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #4f46e5;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #edf5f0;
-  --sidebar-accent-foreground: #1b4332;
-  --sidebar-border: #e8e4df;
-  --sidebar-ring: #2d6a4f;
+  --sidebar-accent: #eef2ff;
+  --sidebar-accent-foreground: #3730a3;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #4f46e5;
 }
 
 @layer base {

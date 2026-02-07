@@ -30,7 +30,7 @@ export default async function ProfilePage() {
       {/* 프로필 카드 */}
       <Card>
         <CardContent className="py-6 text-center">
-          <div className="bg-primary mx-auto flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold text-white">
+          <div className="bg-primary text-primary-foreground mx-auto flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold">
             {profile?.nickname?.charAt(0) ?? "?"}
           </div>
           <h2 className="mt-3 text-lg font-bold">{profile?.nickname ?? "독서가"}</h2>

@@ -34,7 +34,7 @@ export function StarRating({ value, onChange, readonly = false, size = "md" }: S
           <svg
             className={cn(
               SIZE_MAP[size],
-              star <= value ? "fill-craft text-craft" : "text-muted-foreground/30 fill-none"
+              star <= value ? "fill-amber text-amber" : "text-muted-foreground/30 fill-none"
             )}
             viewBox="0 0 24 24"
             stroke="currentColor"

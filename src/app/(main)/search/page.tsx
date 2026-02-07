@@ -86,7 +86,7 @@ export default function SearchPage() {
             <button
               key={book.isbn}
               type="button"
-              className="hover:bg-secondary flex w-full items-start gap-3 rounded-xl p-3 text-left transition-colors"
+              className="hover:bg-muted flex w-full items-start gap-3 rounded-[14px] p-3 text-left transition-colors"
               onClick={() => handleSelect(book)}
             >
               {book.coverUrl ? (

@@ -7,13 +7,13 @@ import { StatusBadge } from "@/components/features/status-badge";
 import type { RecordWithBook } from "@/lib/supabase/types";
 
 const CARD_COLORS: Record<string, string> = {
-  white: "bg-white",
-  parchment: "bg-[#F5EFE0]",
-  sage: "bg-[#E8F0E8]",
-  linen: "bg-[#F0EDE6]",
-  moss: "bg-[#E0EDE0]",
-  sand: "bg-[#F2EDE4]",
-  mist: "bg-[#E8ECF0]",
+  white: "bg-card",
+  parchment: "bg-[#FEF9EF]",
+  sage: "bg-[#EEF2FF]",
+  linen: "bg-[#F5F3FF]",
+  moss: "bg-[#ECFDF5]",
+  sand: "bg-[#FFF7ED]",
+  mist: "bg-[#EFF6FF]",
 };
 
 export function RecordCard({ record }: { record: RecordWithBook }) {
@@ -22,7 +22,7 @@ export function RecordCard({ record }: { record: RecordWithBook }) {
 
   return (
     <Link href={`/record/${record.id}`}>
-      <Card className={`${colorClass} transition-all hover:shadow-md`}>
+      <Card className={`${colorClass} transition-all hover:-translate-y-0.5 hover:shadow-sm`}>
         <CardContent className="flex gap-3 py-4">
           {book?.cover_image_url ? (
             <Image

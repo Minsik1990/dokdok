@@ -1,5 +1,7 @@
+import { BookOpen } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { RecordCard } from "@/components/features/record-card";
+import { EmptyState } from "@/components/features/empty-state";
 import type { RecordWithBook } from "@/lib/supabase/types";
 
 export default async function HomePage() {
@@ -39,12 +41,11 @@ export default async function HomePage() {
 
       {/* 독서 기록 타임라인 */}
       {!records || records.length === 0 ? (
-        <div className="py-16 text-center">
-          <p className="text-muted-foreground text-[15px]">아직 기록이 없어요</p>
-          <p className="text-muted-foreground mt-1 text-[13px]">
-            하단의 + 버튼으로 첫 기록을 남겨보세요
-          </p>
-        </div>
+        <EmptyState
+          icon={BookOpen}
+          title="아직 기록이 없어요"
+          description="하단의 + 버튼으로 첫 번째 독서 기록을 남겨보세요"
+        />
       ) : (
         <div className="space-y-3">
           {records.map((record) => (

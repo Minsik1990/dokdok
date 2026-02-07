@@ -17,8 +17,8 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed right-0 bottom-0 left-0 z-50 border-t bg-white pb-[env(safe-area-inset-bottom)]">
-      <div className="mx-auto flex h-14 max-w-[480px] items-center justify-around">
+    <nav className="border-border/50 bg-background/80 fixed right-0 bottom-0 left-0 z-50 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-[480px] items-center justify-around">
         {NAV_ITEMS.map(({ href, icon: Icon, label }) => {
           const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
 
@@ -28,14 +28,17 @@ export function BottomNav() {
               href={href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "flex flex-col items-center gap-0.5 px-3 py-1.5 text-xs transition-colors",
+                "relative flex flex-col items-center gap-0.5 px-3 py-2 text-[11px] transition-colors",
                 isActive
-                  ? "text-primary font-medium"
+                  ? "text-primary font-semibold"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Icon className={cn("h-5 w-5", href === "/record/new" && "h-6 w-6")} />
+              <Icon className={cn("h-5 w-5", href === "/record/new" && "text-primary h-6 w-6")} />
               <span>{label}</span>
+              {isActive && (
+                <span className="bg-primary absolute -bottom-0.5 h-1 w-1 rounded-full" />
+              )}
             </Link>
           );
         })}

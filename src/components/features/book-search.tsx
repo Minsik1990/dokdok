@@ -89,7 +89,7 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
             <button
               key={book.isbn}
               type="button"
-              className="hover:bg-accent flex w-full items-start gap-3 rounded-lg p-2 text-left transition-colors"
+              className="hover:bg-muted flex w-full items-start gap-3 rounded-[14px] p-2 text-left transition-colors"
               onClick={() => handleSelect(book)}
             >
               {book.coverUrl ? (

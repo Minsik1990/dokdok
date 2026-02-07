@@ -136,7 +136,7 @@ export function AgentPanel({ bookContext, bookId }: AgentPanelProps) {
 
         {/* 결과 표시 */}
         {content && (
-          <div ref={contentRef} className="bg-muted mt-4 rounded-lg p-3">
+          <div ref={contentRef} className="bg-secondary/50 mt-4 rounded-[14px] p-3">
             <div className="prose prose-sm max-w-none text-sm whitespace-pre-wrap">{content}</div>
           </div>
         )}

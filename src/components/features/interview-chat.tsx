@@ -107,7 +107,7 @@ export function InterviewChat({ bookContext, onSummaryReady }: InterviewChatProp
   }
 
   return (
-    <div className="flex flex-col rounded-xl border bg-white">
+    <div className="bg-background flex flex-col rounded-[20px] border">
       {/* 메시지 영역 */}
       <div className="max-h-80 flex-1 space-y-3 overflow-y-auto p-4">
         {messages.length === 0 && (
