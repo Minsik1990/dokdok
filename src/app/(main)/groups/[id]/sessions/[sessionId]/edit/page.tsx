@@ -160,7 +160,9 @@ export default function SessionEditPage() {
                       alt={selectedBook.title}
                       width={48}
                       height={64}
+                      sizes="48px"
                       className="h-16 w-12 rounded object-cover"
+                      loading="lazy"
                     />
                   )}
                   <div className="min-w-0 flex-1">

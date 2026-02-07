@@ -11,6 +11,27 @@ import { AgentPanel } from "@/components/features/agent-panel";
 import { SessionActions } from "./session-actions";
 import { PresentationEditor } from "./presentation-editor";
 import { ReviewItem } from "./review-item";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string; sessionId: string }>;
+}): Promise<Metadata> {
+  const { sessionId } = await params;
+  const supabase = await createClient();
+  const { data: session } = (await supabase
+    .from("sessions")
+    .select("books(title, author)")
+    .eq("id", sessionId)
+    .single()) as { data: { books: { title: string; author: string } | null } | null };
+
+  const bookTitle = session?.books?.title ?? "독서 세션";
+  return {
+    title: bookTitle,
+    description: `${bookTitle} 독서 모임 세션`,
+  };
+}
 
 export default async function SessionDetailPage({
   params,
@@ -66,7 +87,9 @@ export default async function SessionDetailPage({
             alt={book.title}
             width={80}
             height={112}
+            sizes="80px"
             className="h-28 w-20 rounded-xl object-cover shadow"
+            priority
           />
         ) : (
           <div className="bg-muted flex h-28 w-20 items-center justify-center rounded-xl">

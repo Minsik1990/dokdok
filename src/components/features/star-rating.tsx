@@ -26,8 +26,8 @@ export function StarRating({ value, onChange, readonly = false, size = "md" }: S
           onClick={() => onChange?.(value === star ? 0 : star)}
           aria-label={`별점 ${star}점${star <= value ? " (선택됨)" : ""}`}
           className={cn(
-            "transition-transform",
-            !readonly && "hover:scale-110",
+            "flex items-center justify-center transition-transform",
+            !readonly && "min-h-[44px] min-w-[44px] hover:scale-110",
             readonly && "cursor-default"
           )}
         >

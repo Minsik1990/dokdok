@@ -9,6 +9,28 @@ import { createClient } from "@/lib/supabase/server";
 import type { ReadingGroup, SessionWithBook } from "@/lib/supabase/types";
 import { InviteShare } from "@/components/features/invite-share";
 import { GroupActions } from "./group-actions";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+  const { data: group } = await supabase
+    .from("reading_groups")
+    .select("name, description")
+    .eq("id", id)
+    .single();
+
+  if (!group) return { title: "모임" };
+
+  return {
+    title: group.name,
+    description: group.description || `${group.name} 독서 모임`,
+  };
+}
 
 export default async function GroupDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -120,7 +142,9 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
                       alt={session.books.title}
                       width={48}
                       height={64}
+                      sizes="48px"
                       className="h-16 w-12 rounded object-cover"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="bg-muted flex h-16 w-12 items-center justify-center rounded">
@@ -169,7 +193,9 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
                       alt={session.books.title}
                       width={48}
                       height={64}
+                      sizes="48px"
                       className="h-16 w-12 rounded object-cover"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="bg-muted flex h-16 w-12 items-center justify-center rounded">

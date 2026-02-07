@@ -3,6 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 import { MemberActions } from "./member-actions";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "멤버 관리",
+};
 
 export default async function MembersPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: groupId } = await params;

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BookOpen } from "lucide-react";
@@ -16,7 +17,7 @@ const CARD_COLORS: Record<string, string> = {
   mist: "bg-[#EFF6FF]",
 };
 
-export function RecordCard({ record }: { record: RecordWithBook }) {
+export const RecordCard = memo(function RecordCard({ record }: { record: RecordWithBook }) {
   const book = record.books;
   const colorClass = CARD_COLORS[record.card_color] || CARD_COLORS.white;
 
@@ -30,7 +31,9 @@ export function RecordCard({ record }: { record: RecordWithBook }) {
               alt={book.title}
               width={48}
               height={64}
+              sizes="48px"
               className="h-16 w-12 flex-shrink-0 rounded object-cover"
+              loading="lazy"
             />
           ) : (
             <div className="bg-muted flex h-16 w-12 flex-shrink-0 items-center justify-center rounded">
@@ -61,4 +64,4 @@ export function RecordCard({ record }: { record: RecordWithBook }) {
       </Card>
     </Link>
   );
-}
+});

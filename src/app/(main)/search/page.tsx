@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Search, BookOpen } from "lucide-react";
+import { Search, BookOpen, SearchX } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { EmptyState } from "@/components/features/empty-state";
 
 interface BookResult {
   title: string;
@@ -74,10 +75,24 @@ export default function SearchPage() {
         </div>
       )}
 
+      {!loading && !searched && (
+        <EmptyState
+          icon={Search}
+          title="책을 검색해보세요"
+          description="제목이나 저자 이름으로 읽고 싶은 책을 찾아보세요"
+          size="sm"
+          className="py-12"
+        />
+      )}
+
       {!loading && searched && results.length === 0 && (
-        <div className="py-8 text-center">
-          <p className="text-muted-foreground text-sm">검색 결과가 없어요</p>
-        </div>
+        <EmptyState
+          icon={SearchX}
+          title="검색 결과가 없어요"
+          description="다른 키워드로 다시 검색해보세요"
+          size="sm"
+          className="py-12"
+        />
       )}
 
       {!loading && results.length > 0 && (
@@ -95,7 +110,9 @@ export default function SearchPage() {
                   alt={book.title}
                   width={64}
                   height={96}
+                  sizes="64px"
                   className="h-24 w-16 flex-shrink-0 rounded-lg object-cover shadow-sm"
+                  loading="lazy"
                 />
               ) : (
                 <div className="bg-muted flex h-24 w-16 flex-shrink-0 items-center justify-center rounded-lg">

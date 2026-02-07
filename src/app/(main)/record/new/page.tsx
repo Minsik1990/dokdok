@@ -96,6 +96,7 @@ export default function NewRecordPage() {
             publisher: selectedBook.publisher,
             cover_image_url: selectedBook.coverUrl,
             description: selectedBook.description,
+            api_source: "kakao",
           })
           .select("id")
           .single();
@@ -143,7 +144,9 @@ export default function NewRecordPage() {
                     alt={selectedBook.title}
                     width={48}
                     height={64}
+                    sizes="48px"
                     className="h-16 w-12 rounded object-cover"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="bg-muted flex h-16 w-12 items-center justify-center rounded">
@@ -176,7 +179,7 @@ export default function NewRecordPage() {
           )}
         </div>
 
-        {/* 상태 */}
+        {/* 상태 — 터치 타겟 44px 보장 */}
         <div className="space-y-2">
           <Label>상태</Label>
           <div className="flex gap-2">
@@ -185,9 +188,8 @@ export default function NewRecordPage() {
                 key={opt.value}
                 type="button"
                 variant={status === opt.value ? "default" : "outline"}
-                size="sm"
                 onClick={() => setStatus(opt.value)}
-                className="flex-1"
+                className="h-12 flex-1"
               >
                 {opt.label}
               </Button>

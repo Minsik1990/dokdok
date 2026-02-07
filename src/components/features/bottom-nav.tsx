@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Bot, Users, User } from "lucide-react";
+import { Home, Search, Sparkles, Users, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/", icon: Home, label: "홈" },
   { href: "/search", icon: Search, label: "검색" },
-  { href: "/chat", icon: Bot, label: "AI 대화" },
+  { href: "/chat", icon: Sparkles, label: "AI 대화" },
   { href: "/groups", icon: Users, label: "모임" },
   { href: "/profile", icon: User, label: "프로필" },
 ] as const;
@@ -28,7 +28,7 @@ export function BottomNav() {
               href={href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "relative flex flex-col items-center gap-0.5 px-3 py-2 text-[11px] transition-colors",
+                "relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-0.5 px-3 py-1 text-[11px] transition-colors",
                 isActive
                   ? "text-primary font-semibold"
                   : "text-muted-foreground hover:text-foreground"

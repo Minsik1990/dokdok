@@ -5,6 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/features/empty-state";
 import { createClient } from "@/lib/supabase/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "독서 모임",
+  description: "나의 독서 모임 목록",
+};
 
 export default async function GroupsPage() {
   const supabase = await createClient();

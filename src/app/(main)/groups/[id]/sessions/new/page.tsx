@@ -69,6 +69,7 @@ export default function NewSessionPage() {
               publisher: selectedBook.publisher,
               cover_image_url: selectedBook.coverUrl,
               description: selectedBook.description,
+              api_source: "kakao",
             })
             .select("id")
             .single();
@@ -122,7 +123,9 @@ export default function NewSessionPage() {
                       alt={selectedBook.title}
                       width={48}
                       height={64}
+                      sizes="48px"
                       className="h-16 w-12 rounded object-cover"
+                      loading="lazy"
                     />
                   )}
                   <div className="min-w-0 flex-1">

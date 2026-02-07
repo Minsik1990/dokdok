@@ -5,6 +5,12 @@ import { createClient } from "@/lib/supabase/server";
 import { RecordCard } from "@/components/features/record-card";
 import { EmptyState } from "@/components/features/empty-state";
 import type { RecordWithBook } from "@/lib/supabase/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "내 기록",
+  description: "나의 독서 기록 타임라인",
+};
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -53,7 +59,14 @@ export default async function HomePage() {
         <EmptyState
           icon={BookOpen}
           title="아직 기록이 없어요"
-          description="상단의 '새 기록' 버튼으로 첫 번째 독서 기록을 남겨보세요"
+          description="읽고 있는 책이나 읽었던 책을 기록해보세요"
+          action={
+            <Button asChild>
+              <Link href="/record/new">
+                <Plus className="mr-1 h-4 w-4" />첫 기록 남기기
+              </Link>
+            </Button>
+          }
         />
       ) : (
         <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">

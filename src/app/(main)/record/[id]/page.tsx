@@ -9,6 +9,41 @@ import { StatusBadge } from "@/components/features/status-badge";
 import { createClient } from "@/lib/supabase/server";
 import type { RecordWithBook } from "@/lib/supabase/types";
 import { RecordActions } from "./record-actions";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+  const { data: record } = (await supabase
+    .from("records")
+    .select("*, books(title, author, cover_image_url)")
+    .eq("id", id)
+    .single()) as { data: RecordWithBook | null };
+
+  if (!record?.books) {
+    return { title: "기록 상세" };
+  }
+
+  return {
+    title: record.books.title,
+    description: record.content
+      ? record.content.slice(0, 155)
+      : `${record.books.title} - ${record.books.author} 독서 기록`,
+    openGraph: {
+      title: `${record.books.title} | 독독`,
+      description: record.content
+        ? record.content.slice(0, 155)
+        : `${record.books.title} 독서 기록`,
+      ...(record.books.cover_image_url && {
+        images: [{ url: record.books.cover_image_url, width: 200, height: 280 }],
+      }),
+    },
+  };
+}
 
 export default async function RecordDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -46,7 +81,9 @@ export default async function RecordDetailPage({ params }: { params: Promise<{ i
             alt={book.title}
             width={80}
             height={112}
+            sizes="(min-width: 768px) 112px, 80px"
             className="h-28 w-20 rounded-xl object-cover shadow md:h-40 md:w-28"
+            priority
           />
         ) : (
           <div className="bg-muted flex h-28 w-20 items-center justify-center rounded-xl md:h-40 md:w-28">

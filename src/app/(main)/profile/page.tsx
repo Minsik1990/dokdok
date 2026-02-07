@@ -1,11 +1,18 @@
 import Link from "next/link";
-import { Pencil } from "lucide-react";
+import { Pencil, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent } from "@/components/ui/card";
 import { StarRating } from "@/components/features/star-rating";
+import { EmptyState } from "@/components/features/empty-state";
 import { LogoutButton } from "./logout-button";
 import type { Profile } from "@/lib/supabase/types";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "프로필",
+  description: "나의 독서 프로필과 통계",
+};
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -60,26 +67,43 @@ export default async function ProfilePage() {
         <Card>
           <CardContent className="py-4">
             <h3 className="text-muted-foreground mb-3 text-[13px] font-semibold">독서 통계</h3>
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <p className="text-primary text-2xl font-bold">{completedCount}</p>
-                <p className="text-muted-foreground text-[13px]">완독</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{readingCount}</p>
-                <p className="text-muted-foreground text-[13px]">읽는 중</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{wishlistCount}</p>
-                <p className="text-muted-foreground text-[13px]">읽고 싶은</p>
-              </div>
-            </div>
-            {avgRating > 0 && (
-              <div className="mt-4 flex items-center justify-center gap-2 border-t pt-3">
-                <span className="text-muted-foreground text-[13px]">평균 별점</span>
-                <StarRating value={Math.round(avgRating)} readonly size="sm" />
-                <span className="text-sm font-medium">{avgRating.toFixed(1)}</span>
-              </div>
+            {(records?.length ?? 0) === 0 ? (
+              <EmptyState
+                icon={BookOpen}
+                title="아직 독서 기록이 없어요"
+                description="책을 읽고 기록하면 통계가 여기에 표시돼요"
+                size="sm"
+                className="py-8"
+                action={
+                  <Button asChild size="sm">
+                    <Link href="/record/new">첫 기록 남기기</Link>
+                  </Button>
+                }
+              />
+            ) : (
+              <>
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="text-primary text-2xl font-bold">{completedCount}</p>
+                    <p className="text-muted-foreground text-[13px]">완독</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold">{readingCount}</p>
+                    <p className="text-muted-foreground text-[13px]">읽는 중</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold">{wishlistCount}</p>
+                    <p className="text-muted-foreground text-[13px]">읽고 싶은</p>
+                  </div>
+                </div>
+                {avgRating > 0 && (
+                  <div className="mt-4 flex items-center justify-center gap-2 border-t pt-3">
+                    <span className="text-muted-foreground text-[13px]">평균 별점</span>
+                    <StarRating value={Math.round(avgRating)} readonly size="sm" />
+                    <span className="text-sm font-medium">{avgRating.toFixed(1)}</span>
+                  </div>
+                )}
+              </>
             )}
           </CardContent>
         </Card>

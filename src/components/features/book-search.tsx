@@ -81,7 +81,7 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
             {loading ? "..." : "검색"}
           </Button>
         </form>
-        <div className="max-h-[50vh] space-y-2 overflow-y-auto">
+        <div className="max-h-[50vh] space-y-1 overflow-y-auto">
           {results.length === 0 && !loading && query && (
             <p className="text-muted-foreground py-4 text-center text-sm">검색 결과가 없어요</p>
           )}
@@ -89,7 +89,7 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
             <button
               key={book.isbn}
               type="button"
-              className="hover:bg-muted flex w-full items-start gap-3 rounded-[14px] p-2 text-left transition-colors"
+              className="hover:bg-muted flex min-h-[44px] w-full items-start gap-3 rounded-[14px] p-3 text-left transition-colors"
               onClick={() => handleSelect(book)}
             >
               {book.coverUrl ? (
@@ -98,7 +98,9 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
                   alt={book.title}
                   width={48}
                   height={64}
+                  sizes="48px"
                   className="h-16 w-12 flex-shrink-0 rounded object-cover"
+                  loading="lazy"
                 />
               ) : (
                 <div className="bg-muted flex h-16 w-12 flex-shrink-0 items-center justify-center rounded text-xs">

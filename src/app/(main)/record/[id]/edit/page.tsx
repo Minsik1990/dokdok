@@ -113,7 +113,9 @@ export default function EditRecordPage() {
                   alt={book.title}
                   width={48}
                   height={64}
+                  sizes="48px"
                   className="h-16 w-12 rounded object-cover"
+                  loading="lazy"
                 />
               ) : (
                 <div className="bg-muted flex h-16 w-12 items-center justify-center rounded">
