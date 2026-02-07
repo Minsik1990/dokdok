@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -39,8 +40,8 @@ export default function InvitePage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-sm">
-        <CardHeader className="text-center">
-          <h1 className="text-primary text-2xl font-bold">독독</h1>
+        <CardHeader className="flex flex-col items-center gap-1">
+          <Image src="/logo.png" alt="독독" width={160} height={107} priority />
           <p className="text-muted-foreground text-sm">나의 독서 기록</p>
         </CardHeader>
         <CardContent>
