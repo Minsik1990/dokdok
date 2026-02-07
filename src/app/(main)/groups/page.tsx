@@ -41,7 +41,7 @@ export default async function GroupsPage() {
           }
         />
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           {memberships.map((membership) => {
             const group = membership.reading_groups as unknown as {
               id: string;

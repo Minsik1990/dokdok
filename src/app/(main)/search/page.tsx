@@ -81,7 +81,7 @@ export default function SearchPage() {
       )}
 
       {!loading && results.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {results.map((book) => (
             <button
               key={book.isbn}

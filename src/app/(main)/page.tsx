@@ -47,7 +47,7 @@ export default async function HomePage() {
           description="하단의 + 버튼으로 첫 번째 독서 기록을 남겨보세요"
         />
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           {records.map((record) => (
             <RecordCard key={record.id} record={record} />
           ))}

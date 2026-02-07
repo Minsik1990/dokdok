@@ -39,22 +39,22 @@ export default async function RecordDetailPage({ params }: { params: Promise<{ i
       </Button>
 
       {/* 책 정보 */}
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-4 md:gap-6">
         {book?.cover_image_url ? (
           <Image
             src={book.cover_image_url}
             alt={book.title}
             width={80}
             height={112}
-            className="h-28 w-20 rounded-xl object-cover shadow"
+            className="h-28 w-20 rounded-xl object-cover shadow md:h-40 md:w-28"
           />
         ) : (
-          <div className="bg-muted flex h-28 w-20 items-center justify-center rounded-xl">
+          <div className="bg-muted flex h-28 w-20 items-center justify-center rounded-xl md:h-40 md:w-28">
             <BookOpen className="text-muted-foreground h-8 w-8" />
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <h1 className="text-lg font-bold">{book?.title ?? "책 정보 없음"}</h1>
+          <h1 className="text-lg font-bold md:text-xl">{book?.title ?? "책 정보 없음"}</h1>
           {book?.author && <p className="text-muted-foreground text-sm">{book.author}</p>}
           <div className="mt-2 flex items-center gap-2">
             <StatusBadge status={record.status} />
@@ -70,25 +70,28 @@ export default async function RecordDetailPage({ params }: { params: Promise<{ i
         </div>
       </div>
 
-      {/* 감상 */}
-      {record.content && (
-        <Card>
-          <CardContent className="py-4">
-            <h2 className="text-muted-foreground mb-2 text-[13px] font-semibold">감상</h2>
-            <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{record.content}</p>
-          </CardContent>
-        </Card>
-      )}
+      {/* 감상 + 인용구 */}
+      <div className="space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
+        {record.content && (
+          <Card>
+            <CardContent className="py-4">
+              <h2 className="text-muted-foreground mb-2 text-[13px] font-semibold">감상</h2>
+              <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{record.content}</p>
+            </CardContent>
+          </Card>
+        )}
 
-      {/* 인용구 */}
-      {record.quote && (
-        <Card className="bg-secondary">
-          <CardContent className="py-4">
-            <h2 className="text-muted-foreground mb-2 text-[13px] font-semibold">인상 깊은 문구</h2>
-            <p className="text-[15px] leading-relaxed italic">&ldquo;{record.quote}&rdquo;</p>
-          </CardContent>
-        </Card>
-      )}
+        {record.quote && (
+          <Card className="bg-secondary">
+            <CardContent className="py-4">
+              <h2 className="text-muted-foreground mb-2 text-[13px] font-semibold">
+                인상 깊은 문구
+              </h2>
+              <p className="text-[15px] leading-relaxed italic">&ldquo;{record.quote}&rdquo;</p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
 
       {/* 액션 버튼 */}
       {isOwner && <RecordActions recordId={record.id} />}
