@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { BookOpen, Calendar, Users, Mic, UserCheck, ImageIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ClubCoverUploader } from "@/components/features/club-cover-uploader";
 import type { Database } from "@/lib/supabase/database.types";
 
 type Club = Database["public"]["Tables"]["clubs"]["Row"];
@@ -76,25 +77,28 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     }
   }
 
-  // 첫 모임, 마지막 모임 날짜
+  // 첫 모임 날짜 ~ 오늘 (KST)
   const firstDate =
     allSessions.length > 0 ? allSessions[allSessions.length - 1].session_date : null;
-  const lastDate = allSessions.length > 0 ? allSessions[0].session_date : null;
+  const today = getKSTDate();
 
   return (
     <div className="space-y-6">
       {/* 모임 정보 */}
       <Card className="rounded-[20px]">
-        <CardContent className="pt-6">
-          <h2 className="text-lg font-bold">{club?.name ?? "모임"}</h2>
-          {club?.description && (
-            <p className="text-muted-foreground mt-1 text-sm">{club.description}</p>
-          )}
-          {firstDate && lastDate && (
-            <p className="text-muted-foreground mt-2 text-xs">
-              {formatDate(firstDate)} ~ {formatDate(lastDate)}
-            </p>
-          )}
+        <CardContent className="flex items-center gap-4 pt-6">
+          <ClubCoverUploader clubId={clubId} initialUrl={club?.cover_image_url ?? null} />
+          <div className="min-w-0 flex-1">
+            <h2 className="text-lg font-bold">{club?.name ?? "모임"}</h2>
+            {club?.description && (
+              <p className="text-muted-foreground mt-0.5 text-sm">{club.description}</p>
+            )}
+            {firstDate && (
+              <p className="text-muted-foreground mt-1.5 text-xs">
+                {formatDate(firstDate)} ~ {formatDate(today)}
+              </p>
+            )}
+          </div>
         </CardContent>
       </Card>
 
@@ -194,6 +198,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
       </Card>
     </div>
   );
+}
+
+function getKSTDate() {
+  return new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }))
+    .toISOString()
+    .split("T")[0];
 }
 
 function formatDate(dateStr: string) {
