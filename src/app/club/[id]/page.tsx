@@ -38,56 +38,36 @@ export default async function GalleryPage({ params }: { params: Promise<{ id: st
     );
   }
 
-  // 월별 그룹화
-  const grouped = new Map<string, SessionWithBook[]>();
-  for (const session of typedSessions) {
-    const date = new Date(session.session_date);
-    const key = `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
-    if (!grouped.has(key)) grouped.set(key, []);
-    grouped.get(key)!.push(session);
-  }
-
   return (
-    <div className="space-y-8">
-      {Array.from(grouped.entries()).map(([month, items]) => (
-        <section key={month}>
-          <h2 className="text-muted-foreground mb-3 text-sm font-semibold">{month}</h2>
-          <div className="grid grid-cols-3 gap-3">
-            {items.map((session) => (
-              <Link
-                key={session.id}
-                href={`/club/${clubId}/session/${session.id}`}
-                className="group"
-              >
-                <div className="bg-muted relative aspect-[3/4] overflow-hidden rounded-[14px]">
-                  {session.books?.cover_image_url ? (
-                    <Image
-                      src={session.books.cover_image_url}
-                      alt={session.books.title}
-                      fill
-                      sizes="(max-width: 480px) 33vw, 150px"
-                      className="object-cover transition-transform group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center p-2 text-center">
-                      <span className="text-muted-foreground text-xs">
-                        {session.books?.title ?? `#${session.session_number}`}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="mt-1.5 px-0.5">
-                  <p className="truncate text-xs font-medium">
-                    {session.books?.title ?? `제${session.session_number}회`}
-                  </p>
-                  <p className="text-muted-foreground truncate text-[11px]">
-                    {(session.presenter ?? []).join(", ")}
-                  </p>
-                </div>
-              </Link>
-            ))}
+    <div className="grid grid-cols-3 gap-3">
+      {typedSessions.map((session) => (
+        <Link key={session.id} href={`/club/${clubId}/session/${session.id}`} className="group">
+          <div className="bg-muted relative aspect-[3/4] overflow-hidden rounded-[14px]">
+            {session.books?.cover_image_url ? (
+              <Image
+                src={session.books.cover_image_url}
+                alt={session.books.title}
+                fill
+                sizes="(max-width: 480px) 33vw, 150px"
+                className="object-cover transition-transform group-hover:scale-105"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center p-2 text-center">
+                <span className="text-muted-foreground text-xs">
+                  {session.books?.title ?? `#${session.session_number}`}
+                </span>
+              </div>
+            )}
           </div>
-        </section>
+          <div className="mt-1.5 px-0.5">
+            <p className="truncate text-xs font-medium">
+              {session.books?.title ?? `제${session.session_number}회`}
+            </p>
+            <p className="text-muted-foreground truncate text-[11px]">
+              {(session.presenter ?? []).join(", ")}
+            </p>
+          </div>
+        </Link>
       ))}
     </div>
   );

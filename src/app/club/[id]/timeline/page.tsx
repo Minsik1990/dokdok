@@ -19,7 +19,7 @@ interface SessionWithBook {
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);
-  return `${d.getMonth() + 1}월 ${d.getDate()}일`;
+  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
 }
 
 export default async function TimelinePage({ params }: { params: Promise<{ id: string }> }) {
