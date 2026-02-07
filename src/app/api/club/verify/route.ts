@@ -35,6 +35,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "접속 코드를 입력해주세요." }, { status: 400 });
   }
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  console.log("[verify] env check:", {
+    hasUrl: !!supabaseUrl,
+    urlPrefix: supabaseUrl?.slice(0, 30),
+    hasKey: !!serviceKey,
+    keyPrefix: serviceKey?.slice(0, 20),
+  });
+
   const supabase = createClient();
   const { data: club, error } = await supabase
     .from("clubs")
@@ -42,8 +51,9 @@ export async function POST(request: NextRequest) {
     .eq("access_code", accessCode)
     .maybeSingle();
 
+  console.log("[verify] query result:", { accessCode, club, error: error?.message });
+
   if (error) {
-    console.error("verify error:", error.message);
     return NextResponse.json({ error: "서버 오류가 발생했습니다." }, { status: 500 });
   }
 
