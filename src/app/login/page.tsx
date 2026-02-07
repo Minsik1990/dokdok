@@ -179,6 +179,7 @@ export default function LoginPage() {
                 onClick={() => {
                   setMode("password");
                   setError("");
+                  setCooldown(0);
                 }}
                 className="text-muted-foreground hover:text-foreground block w-full text-center text-xs transition-colors"
               >
@@ -208,7 +209,7 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={!email.trim() || !password.trim() || loading || cooldown > 0}
+                disabled={!email.trim() || !password.trim() || loading}
               >
                 {loading ? "로그인 중..." : "로그인"}
               </Button>
