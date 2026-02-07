@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
-import { Camera, Loader2, X } from "lucide-react";
+import { Camera, ChevronLeft, ChevronRight, Loader2, X } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 interface PhotoUploaderProps {
   clubId: string;
@@ -15,7 +16,44 @@ export function PhotoUploader({ clubId, sessionId, initialPhotos }: PhotoUploade
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const touchStartX = useRef<number>(0);
+
+  const lightboxOpen = lightboxIndex !== null;
+
+  const goToPrev = useCallback(() => {
+    setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setLightboxIndex((prev) => (prev !== null && prev < photos.length - 1 ? prev + 1 : prev));
+  }, [photos.length]);
+
+  // 키보드 네비게이션
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "ArrowLeft") goToPrev();
+      else if (e.key === "ArrowRight") goToNext();
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxOpen, goToPrev, goToNext]);
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goToNext();
+      else goToPrev();
+    }
+  }
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []);
@@ -122,14 +160,20 @@ export function PhotoUploader({ clubId, sessionId, initialPhotos }: PhotoUploade
       {photos.length > 0 ? (
         <div className="grid grid-cols-3 gap-2">
           {photos.map((url, i) => (
-            <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-              <Image
-                src={url}
-                alt={`사진 ${i + 1}`}
-                fill
-                sizes="(max-width: 480px) 33vw, 150px"
-                className="object-cover"
-              />
+            <div key={url} className="relative aspect-square overflow-hidden rounded-lg">
+              <button
+                type="button"
+                onClick={() => setLightboxIndex(i)}
+                className="h-full w-full cursor-zoom-in"
+              >
+                <Image
+                  src={url}
+                  alt={`사진 ${i + 1}`}
+                  fill
+                  sizes="(max-width: 480px) 33vw, 150px"
+                  className="object-cover"
+                />
+              </button>
               <button
                 type="button"
                 onClick={() => handleDelete(url)}
@@ -152,6 +196,69 @@ export function PhotoUploader({ clubId, sessionId, initialPhotos }: PhotoUploade
       )}
 
       {error && <p className="text-destructive mt-2 text-center text-sm">{error}</p>}
+
+      {/* Lightbox */}
+      <Dialog open={lightboxOpen} onOpenChange={(open) => !open && setLightboxIndex(null)}>
+        <DialogContent
+          showCloseButton={false}
+          className="h-screen w-screen max-w-none rounded-none border-0 bg-black/95 p-0"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <DialogTitle className="sr-only">사진 확대 보기</DialogTitle>
+
+          {/* 닫기 버튼 */}
+          <button
+            type="button"
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          {/* 이전 버튼 */}
+          {lightboxIndex !== null && lightboxIndex > 0 && (
+            <button
+              type="button"
+              onClick={goToPrev}
+              className="absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+          )}
+
+          {/* 다음 버튼 */}
+          {lightboxIndex !== null && lightboxIndex < photos.length - 1 && (
+            <button
+              type="button"
+              onClick={goToNext}
+              className="absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          )}
+
+          {/* 이미지 */}
+          {lightboxIndex !== null && (
+            <div className="flex h-full w-full items-center justify-center p-12">
+              <Image
+                src={photos[lightboxIndex]}
+                alt={`사진 ${lightboxIndex + 1}`}
+                fill
+                sizes="100vw"
+                className="object-contain"
+              />
+            </div>
+          )}
+
+          {/* 인디케이터 */}
+          {lightboxIndex !== null && (
+            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm text-white/70">
+              {lightboxIndex + 1} / {photos.length}
+            </p>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

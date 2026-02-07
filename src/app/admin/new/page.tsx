@@ -104,6 +104,7 @@ export default function AdminNewPage() {
                   className="bg-input h-12 border-0"
                   required
                 />
+                <p className="text-muted-foreground text-xs">모임 이름은 고유해야 합니다</p>
               </div>
 
               <div className="space-y-1.5">

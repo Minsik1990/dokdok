@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS books CASCADE;
 -- 독서 모임
 CREATE TABLE clubs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
+  name TEXT UNIQUE NOT NULL,
   description TEXT,
   cover_image_url TEXT,
-  access_code TEXT UNIQUE NOT NULL,
+  access_code TEXT NOT NULL,
   admin_password_hash TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now(),

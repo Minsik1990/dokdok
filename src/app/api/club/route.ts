@@ -52,16 +52,16 @@ export async function POST(request: NextRequest) {
 
   const supabase = createClient();
 
-  // 접속 코드 중복 확인
+  // 모임 이름 중복 확인
   const { data: existing } = await supabase
     .from("clubs")
     .select("id")
-    .eq("access_code", accessCode)
+    .eq("name", name)
     .maybeSingle();
 
   if (existing) {
     return NextResponse.json(
-      { error: "이미 사용 중인 접속 코드입니다. 다른 코드를 입력하세요." },
+      { error: "이미 사용 중인 모임 이름입니다. 다른 이름을 입력하세요." },
       { status: 409 }
     );
   }
@@ -81,7 +81,13 @@ export async function POST(request: NextRequest) {
     .single();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error.code === "23505") {
+      return NextResponse.json(
+        { error: "이미 사용 중인 모임 이름입니다. 다른 이름을 입력하세요." },
+        { status: 409 }
+      );
+    }
+    return NextResponse.json({ error: "모임 생성에 실패했습니다." }, { status: 500 });
   }
 
   return NextResponse.json({ clubId: club.id }, { status: 201 });

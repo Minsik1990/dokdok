@@ -66,21 +66,26 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json({ error: "관리자 비밀번호가 일치하지 않습니다." }, { status: 403 });
   }
 
-  // 접속 코드 변경 시 중복 체크
+  // 모임 이름 변경 시 중복 체크
+  if (name) {
+    const trimmedName = name.trim();
+    const { data: existing } = await supabase
+      .from("clubs")
+      .select("id")
+      .eq("name", trimmedName)
+      .neq("id", clubId)
+      .maybeSingle();
+    if (existing) {
+      return NextResponse.json({ error: "이미 사용 중인 모임 이름입니다." }, { status: 409 });
+    }
+  }
+
+  // 접속 코드 유효성 검사 (중복 허용)
   const { accessCode } = body;
   if (accessCode !== undefined) {
     const trimmed = (accessCode as string).trim();
     if (trimmed.length < 2) {
       return NextResponse.json({ error: "접속 코드는 2자 이상이어야 합니다." }, { status: 400 });
-    }
-    const { data: existing } = await supabase
-      .from("clubs")
-      .select("id")
-      .eq("access_code", trimmed)
-      .neq("id", clubId)
-      .maybeSingle();
-    if (existing) {
-      return NextResponse.json({ error: "이미 사용 중인 접속 코드입니다." }, { status: 409 });
     }
   }
 
@@ -88,7 +93,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   const updateData: Record<string, unknown> = {
     updated_at: new Date().toISOString(),
   };
-  if (name) updateData.name = name;
+  if (name) updateData.name = name.trim();
   if (description !== undefined) updateData.description = description ?? null;
   if (accessCode !== undefined) updateData.access_code = (accessCode as string).trim();
 
@@ -100,7 +105,10 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     .single();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error.code === "23505") {
+      return NextResponse.json({ error: "이미 사용 중인 모임 이름입니다." }, { status: 409 });
+    }
+    return NextResponse.json({ error: "모임 정보 수정에 실패했습니다." }, { status: 500 });
   }
 
   return NextResponse.json({ club: updated });
