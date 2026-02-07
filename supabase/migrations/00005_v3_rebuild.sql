@@ -55,7 +55,7 @@ CREATE TABLE club_sessions (
   book_id UUID REFERENCES books(id),
   session_number INTEGER,
   session_date DATE NOT NULL,
-  presenter TEXT,
+  presenter TEXT[] DEFAULT '{}',
   participants TEXT[] DEFAULT '{}',
   presentation_text TEXT CHECK (length(presentation_text) <= 10000),
   content TEXT CHECK (length(content) <= 5000),
@@ -74,13 +74,9 @@ CREATE TABLE members (
 );
 
 -- 인덱스
-CREATE INDEX idx_clubs_access_code ON clubs(access_code);
 CREATE INDEX idx_club_sessions_club_id ON club_sessions(club_id);
-CREATE INDEX idx_club_sessions_date ON club_sessions(session_date DESC);
 CREATE INDEX idx_club_sessions_book_id ON club_sessions(book_id);
-CREATE INDEX idx_club_sessions_presenter ON club_sessions(presenter);
 CREATE INDEX idx_members_club_id ON members(club_id);
-CREATE INDEX idx_books_isbn ON books(isbn);
 
 -- RLS 비활성화 (서버 사이드 전용 접근)
 ALTER TABLE clubs DISABLE ROW LEVEL SECURITY;
