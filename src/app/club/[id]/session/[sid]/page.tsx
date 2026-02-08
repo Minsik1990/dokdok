@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Calendar, User, Users, BookOpen, Pencil, ExternalLink } from "lucide-react";
+import { Calendar, User, Users, BookOpen, Pencil } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { DeleteSessionButton } from "@/components/features/delete-session-button";
 import { SessionComments } from "@/components/features/session-comments";
 import { PhotoUploader } from "@/components/features/photo-uploader";
-import { ExpandableText } from "@/components/features/expandable-text";
+
 import type { Database } from "@/lib/supabase/database.types";
 
 type ClubSession = Database["public"]["Tables"]["club_sessions"]["Row"];
@@ -89,25 +89,6 @@ export default async function SessionDetailPage({
             {book.author && <p className="text-muted-foreground mt-0.5 text-sm">{book.author}</p>}
             {book.publisher && <p className="text-muted-foreground text-xs">{book.publisher}</p>}
           </div>
-        </div>
-      )}
-
-      {/* 책 설명 */}
-      {book?.description && (
-        <div className="bg-card rounded-[20px] p-4 shadow-sm">
-          <h3 className="text-foreground mb-2 text-sm font-semibold">책 소개</h3>
-          <ExpandableText text={book.description} maxLines={4} />
-          {book.info_url && (
-            <a
-              href={book.info_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary mt-2 inline-flex items-center gap-1 text-sm font-medium"
-            >
-              다음에서 전체 소개 보기
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-          )}
         </div>
       )}
 
