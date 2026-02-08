@@ -55,6 +55,13 @@ export async function PUT(
 
       if (existing) {
         bookId = existing.id;
+        // 기존 책의 누락된 필드 업데이트
+        const updates: Record<string, string> = {};
+        if (description) updates.description = description;
+        if (infoUrl) updates.info_url = infoUrl;
+        if (Object.keys(updates).length > 0) {
+          await supabase.from("books").update(updates).eq("id", existing.id).is("info_url", null);
+        }
       }
     }
 
