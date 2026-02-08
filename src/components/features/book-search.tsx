@@ -38,6 +38,7 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
 
   async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    e.stopPropagation();
     if (!query.trim()) return;
 
     setLoading(true);
