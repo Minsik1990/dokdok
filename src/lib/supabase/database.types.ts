@@ -22,7 +22,6 @@ export type Database = {
           created_at: string | null
           description: string | null
           id: string
-          info_url: string | null
           isbn: string | null
           publisher: string | null
           title: string
@@ -34,7 +33,6 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           id?: string
-          info_url?: string | null
           isbn?: string | null
           publisher?: string | null
           title: string
@@ -46,7 +44,6 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           id?: string
-          info_url?: string | null
           isbn?: string | null
           publisher?: string | null
           title?: string

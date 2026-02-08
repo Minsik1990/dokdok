@@ -29,7 +29,6 @@ interface BookInfo {
   publisher: string;
   coverUrl: string;
   description: string;
-  infoUrl?: string;
 }
 
 interface SessionFormData {
@@ -274,7 +273,6 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
               publisher: book.publisher,
               coverUrl: book.coverUrl,
               description: book.description,
-              infoUrl: book.infoUrl,
             }
           : null,
         sessionDate,
