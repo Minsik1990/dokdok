@@ -44,7 +44,7 @@ export function PersonTimelineDialog({
         {sessions.length === 0 ? (
           <p className="text-muted-foreground py-6 text-center text-sm">기록이 없습니다.</p>
         ) : (
-          <div className="relative mt-2">
+          <div className="relative mt-2 overflow-hidden">
             {/* 연속 세로선 — 첫 번째 점 중심 ~ 마지막 점 중심 */}
             <div className="absolute top-[36px] bottom-[36px] left-[14px] w-0.5 bg-green-100" />
 
