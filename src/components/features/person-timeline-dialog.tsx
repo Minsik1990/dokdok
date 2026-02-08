@@ -45,7 +45,7 @@ export function PersonTimelineDialog({
         ) : (
           <div className="relative mt-2">
             {/* 연속 세로선 — 첫 번째 점 중심 ~ 마지막 점 중심 */}
-            <div className="absolute top-[36px] bottom-[36px] left-[14px] w-0.5 bg-indigo-100" />
+            <div className="absolute top-0 bottom-[36px] left-[14px] w-0.5 bg-indigo-100" />
 
             {sessions.map((s) => (
               <Link
