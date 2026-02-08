@@ -47,10 +47,9 @@ export default async function SessionDetailPage({
 
   // 날짜 기반 모임 회차 계산
   const uniqueDates = [...new Set((allDatesResult.data ?? []).map((s) => s.session_date))].sort();
-  const totalMeetings = uniqueDates.length;
   const dateToMeetingNum = new Map<string, number>();
   uniqueDates.forEach((date, i) => dateToMeetingNum.set(date, i + 1));
-  const meetingNumber = totalMeetings - (dateToMeetingNum.get(session.session_date) ?? 0) + 1;
+  const meetingNumber = dateToMeetingNum.get(session.session_date) ?? 0;
 
   return (
     <div className="space-y-6">

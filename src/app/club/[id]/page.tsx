@@ -30,7 +30,6 @@ export default async function GalleryPage({ params }: { params: Promise<{ id: st
 
   // 날짜 기반 모임 회차 계산
   const uniqueDates = [...new Set(typedSessions.map((s) => s.session_date))].sort();
-  const totalMeetings = uniqueDates.length;
   const dateToMeetingNum = new Map<string, number>();
   uniqueDates.forEach((date, i) => dateToMeetingNum.set(date, i + 1));
 
@@ -60,16 +59,14 @@ export default async function GalleryPage({ params }: { params: Promise<{ id: st
             ) : (
               <div className="flex h-full items-center justify-center p-2 text-center">
                 <span className="text-muted-foreground text-xs">
-                  {session.books?.title ??
-                    `#${totalMeetings - (dateToMeetingNum.get(session.session_date) ?? 0) + 1}`}
+                  {session.books?.title ?? `#${dateToMeetingNum.get(session.session_date) ?? 0}`}
                 </span>
               </div>
             )}
           </div>
           <div className="mt-1.5 px-0.5">
             <p className="truncate text-xs font-medium">
-              {session.books?.title ??
-                `제${totalMeetings - (dateToMeetingNum.get(session.session_date) ?? 0) + 1}회`}
+              {session.books?.title ?? `제${dateToMeetingNum.get(session.session_date) ?? 0}회`}
             </p>
             <p className="text-muted-foreground truncate text-[11px]">
               {(session.presenter ?? []).join(", ")}

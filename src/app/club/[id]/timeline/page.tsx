@@ -40,7 +40,6 @@ export default async function TimelinePage({ params }: { params: Promise<{ id: s
   const uniqueDates = [...new Set(typedSessions.map((s) => s.session_date))].sort();
   const dateToMeetingNum = new Map<string, number>();
   uniqueDates.forEach((date, i) => dateToMeetingNum.set(date, i + 1));
-  const totalMeetings = uniqueDates.length;
 
   if (typedSessions.length === 0) {
     return (
@@ -82,10 +81,10 @@ export default async function TimelinePage({ params }: { params: Promise<{ id: s
             <div className="flex items-start justify-between gap-2">
               <h3 className="truncate text-sm font-semibold">
                 {session.books?.title ??
-                  `제${totalMeetings - (dateToMeetingNum.get(session.session_date) ?? 0) + 1}회 모임`}
+                  `제${dateToMeetingNum.get(session.session_date) ?? 0}회 모임`}
               </h3>
               <span className="bg-secondary text-secondary-foreground flex-shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium">
-                #{totalMeetings - (dateToMeetingNum.get(session.session_date) ?? 0) + 1}
+                #{dateToMeetingNum.get(session.session_date) ?? 0}
               </span>
             </div>
             {session.books?.author && (
