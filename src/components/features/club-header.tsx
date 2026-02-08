@@ -34,13 +34,15 @@ export function ClubHeader({ clubId, clubName }: ClubHeaderProps) {
       {/* 상단 헤더 */}
       <div className="flex items-center gap-3 px-4 py-3">
         <div className="flex min-w-0 items-center gap-2.5">
-          <Image
-            src="/logo-header.png"
-            alt="독독"
-            width={60}
-            height={20}
-            className="h-5 w-auto shrink-0"
-          />
+          <Link href={basePath}>
+            <Image
+              src="/logo-header.png"
+              alt="독독"
+              width={60}
+              height={20}
+              className="h-5 w-auto shrink-0"
+            />
+          </Link>
           <div className="bg-border h-4 w-px shrink-0" />
           <h1 className="text-foreground truncate text-base font-semibold">{clubName}</h1>
         </div>
