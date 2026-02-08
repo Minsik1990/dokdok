@@ -54,7 +54,7 @@ export function YearlyMeetingChart({ data }: YearlyMeetingChartProps) {
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 }}
               />
-              <Bar dataKey="count" fill="#4F46E5" radius={[6, 6, 0, 0]} maxBarSize={40} />
+              <Bar dataKey="count" fill="#00704A" radius={[6, 6, 0, 0]} maxBarSize={40} />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -14,7 +14,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#4F46E5",
+  themeColor: "#00704A",
 };
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     siteName: "독독",
-    images: [{ url: "/logo.png", width: 800, height: 536, alt: "독독" }],
+    images: [{ url: "/logo.png", width: 1080, height: 1080, alt: "독독" }],
   },
   robots: {
     index: true,

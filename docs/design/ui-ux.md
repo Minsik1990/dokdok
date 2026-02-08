@@ -1,7 +1,7 @@
 # UI/UX 디자인 시스템
 
-> 최종 업데이트: 2026-02-07 (v2.0)
-> v2 전면 개편: 포레스트그린 테마 디자인 시스템
+> 최종 업데이트: 2026-02-08 (v3.0)
+> v3 전면 개편: 독서 모임 기록 전용 + 스타벅스 그린 테마
 
 ---
 
@@ -9,18 +9,16 @@
 
 ### 핵심 키워드
 
-- **자연적 (Natural)**: 포레스트그린 포인트, 파스텔 카드 배경, 부드러운 모서리
-- **깔끔한 (Clean)**: 토스처럼 미니멀하고 여백 충분
-- **직관적 (Intuitive)**: 하단 탭 5개, 한 손 조작 최적화
+- **깔끔한 (Clean)**: 화이트 도미넌트, 여백 충분, 미니멀
+- **자연적 (Natural)**: 스타벅스 그린 포인트, 앰버 액센트, 부드러운 모서리
+- **직관적 (Intuitive)**: 상단 4탭 + FAB, 한 손 조작 최적화
 - **모바일 퍼스트 (Mobile-First)**: 480px 기준, 라이트 모드 전용
 
-### 참고 스타일
+### 60-30-10 컬러 법칙 (스타벅스 앱 참고)
 
-| 서비스     | 참고 요소                                             |
-| ---------- | ----------------------------------------------------- |
-| **토스**   | 미니멀 레이아웃, 직관적 네비게이션, 타이포그래피 중심 |
-| **카카오** | 자연적 색감, 카드형 UI, 둥근 모서리                   |
-| **Repov**  | 독서 기록 카드, 감성적 색상 팔레트                    |
+- **60% White** — 배경 캔버스 (카드, 바디, 팝오버)
+- **30% Green** — 브랜드 터치포인트 (CTA 버튼, 아이콘, 뱃지, 링크)
+- **10% Amber + Black** — 강조, 별점, 텍스트
 
 ---
 
@@ -29,41 +27,42 @@
 ### Core Colors
 
 ```
-background:    #FAFAFA    (앱 배경)
-card:          #FFFFFF    (카드/서피스)
-foreground:    #191F28    (기본 텍스트)
-muted:         #8B95A1    (보조 텍스트)
-border:        #E5E8EB    (테두리)
+background:          #FFFFFF    (앱 배경)
+card:                #FFFFFF    (카드/서피스)
+foreground:          #111827    (기본 텍스트)
+muted:               #F9FAFB    (배경 서브)
+muted-foreground:    #6B7280    (보조 텍스트)
+border:              #E5E7EB    (테두리)
+input:               #F9FAFB    (입력 필드 배경)
 ```
 
 ### Brand Colors
 
 ```
-primary:       #2D6A4F    (포레스트그린 — 메인 포인트, CTA)
-primary-foreground: #FFFFFF
-secondary:     #E8F0EC    (연한 그린 — 태그, 배경 강조)
-secondary-foreground: #2D6A4F
+primary:             #00704A    (스타벅스 그린 — CTA, 아이콘, 링크)
+primary-foreground:  #FFFFFF
+secondary:           #ecfdf5    (연한 민트그린 — 호버, 선택 배경)
+secondary-foreground:#14532d    (다크 그린 — secondary 위 텍스트)
+accent:              #F59E0B    (앰버 — FAB, 하이라이트)
+accent-foreground:   #78350F
 ```
 
 ### Semantic Colors
 
 ```
-accent:        #C9A96E    (크래프트베이지 — 별점, 하이라이트)
-success:       #66BB6A    (성공, 완독 상태)
-destructive:   #F44336    (삭제, 에러)
+destructive:         #EF4444    (삭제, 에러)
+success:             #10B981    (성공 상태)
+ring:                #00704A    (포커스 링 = primary)
 ```
 
-### Record Card 배경색
-
-기록 카드에 적용되는 파스텔 배경. 사용자가 선택하거나 랜덤 배정.
+### Chart Colors
 
 ```
-peach:         #FFF0E8    (복숭아)
-lavender:      #F0EEFF    (라벤더)
-mint:          #E8FFF0    (민트)
-lemon:         #FFFDE8    (레몬)
-rose:          #FFE8EE    (로즈)
-sky:           #E8F4FF    (하늘)
+chart-1:             #00704A    (primary 그린)
+chart-2:             #F59E0B    (앰버)
+chart-3:             #3B82F6    (블루)
+chart-4:             #8B5CF6    (퍼플)
+chart-5:             #EC4899    (핑크)
 ```
 
 ---
@@ -72,17 +71,17 @@ sky:           #E8F4FF    (하늘)
 
 ### 폰트
 
-- **기본**: Pretendard (한글 + 영문 + 숫자)
+- **기본**: Pretendard Variable (한글 + 영문 + 숫자)
 - **대체**: system-ui, -apple-system
 
 ### 사이즈 체계
 
-| 용도          | 크기 | 굵기           | 행간 |
-| ------------- | ---- | -------------- | ---- |
-| Page Title    | 22px | Bold (700)     | 1.3  |
-| Section Title | 17px | SemiBold (600) | 1.4  |
-| Body          | 15px | Regular (400)  | 1.6  |
-| Caption       | 13px | Regular (400)  | 1.4  |
+| 용도          | 크기    | 굵기           | Tailwind                    |
+| ------------- | ------- | -------------- | --------------------------- |
+| Page Title    | 18-22px | Bold (700)     | text-lg ~ text-xl font-bold |
+| Section Title | 14px    | SemiBold (600) | text-sm font-semibold       |
+| Body          | 14px    | Regular (400)  | text-sm                     |
+| Caption       | 12px    | Regular (400)  | text-xs                     |
 
 ---
 
@@ -96,24 +95,42 @@ padding:       16px (좌우)
 margin:        0 auto (데스크톱 중앙 정렬)
 ```
 
-### 모서리 반경
+### 모서리 반경 (radius)
 
 ```
-카드/패널:     16px (rounded-2xl)
-버튼/입력:     12px (rounded-xl)
-뱃지/태그:     8px  (rounded-lg)
-아바타:        50% (rounded-full)
+카드/패널:     20px (rounded-[20px])
+버튼/입력:     14px (rounded-[14px])
+뱃지/태그:     full (rounded-full)
+아바타:        full (rounded-full)
 ```
 
-### 하단 탭 네비게이션
+### 상단 탭 네비게이션
 
 ```
-탭 개수:       5개 (홈 / 검색 / +기록 / 모임 / 프로필)
-높이:          56px + safe-area-inset-bottom
-배경:          #FFFFFF + border-top 1px #E5E8EB
-활성 탭:       #2D6A4F (포레스트그린)
-비활성 탭:     #8B95A1 (muted)
-+기록 버튼:    포레스트그린 원형 아이콘 (강조)
+탭 개수:       4개 (책장 / 타임라인 / 읽고싶은책 / 프로필)
+위치:          상단 (sticky)
+배경:          bg-white/80 backdrop-blur-xl
+활성 탭:       border-b-2 border-primary text-primary
+비활성 탭:     text-muted-foreground
+```
+
+### FAB (Floating Action Button)
+
+```
+위치:          우측 하단 fixed (bottom-6 right-6)
+크기:          h-14 w-14
+배경:          bg-accent (#F59E0B 앰버)
+아이콘:        Plus (white)
+모서리:        rounded-full
+그림자:        shadow-lg
+```
+
+### 헤더
+
+```
+구성:          [독독로고] | [모임명]  [설정]
+배경:          bg-white/80 backdrop-blur-xl
+위치:          sticky top-0 z-50
 ```
 
 ### 페이지 구조
@@ -122,17 +139,15 @@ margin:        0 auto (데스크톱 중앙 정렬)
 ┌─────────────────────────┐
 │       Status Bar        │
 ├─────────────────────────┤
-│    Page Title (22px)    │
-│    선택적 서브타이틀      │
+│  [로고] | [모임명] [⚙️]  │  ← 헤더 (sticky)
+├─────────────────────────┤
+│ 책장  타임라인  읽고싶은책  프로필 │  ← 탭 (sticky)
 ├─────────────────────────┤
 │                         │
 │      Main Content       │
 │    (스크롤 가능 영역)     │
 │                         │
-├─────────────────────────┤
-│  홈  검색  +기록  모임  프로필  │
-│       Bottom Nav        │
-│     + safe-area         │
+│                    [+]  │  ← FAB
 └─────────────────────────┘
 ```
 
@@ -140,157 +155,127 @@ margin:        0 auto (데스크톱 중앙 정렬)
 
 ## 5. 컴포넌트 스타일
 
-### 기록 카드 (RecordCard)
+### 카드
 
 ```
-배경:          파스텔 카드 색상 (peach/lavender/mint/lemon/rose/sky)
-모서리:        16px
-패딩:          16px
-그림자:        shadow-sm (0 1px 2px rgba(0,0,0,0.05))
-구성:
-  ├── 상단: 책 제목 + 저자 (15px/600)
-  ├── 중간: 감상 내용 (15px/400, max 3줄)
-  ├── 인용: 인용문 (13px/400, 좌측 보더)
-  └── 하단: 별점 + 상태 배지 + 날짜
+배경:          #FFFFFF (bg-card)
+모서리:        20px (rounded-[20px])
+패딩:          16px (p-4)
+그림자:        shadow-sm
+주의:          CardContent에 pt-6 추가 금지 (Card py-6과 이중 패딩)
 ```
 
 ### 버튼
 
 ```
-Primary:     배경 #2D6A4F, 텍스트 #FFFFFF, rounded-xl, h-48px
-Secondary:   배경 #E8F0EC, 텍스트 #2D6A4F, rounded-xl, h-48px
-Ghost:       배경 transparent, 호버 #FAFAFA, rounded-xl
-Destructive: 배경 #F44336, 텍스트 #FFFFFF, rounded-xl
+Primary:     배경 #00704A, 텍스트 #FFFFFF, rounded-[14px], h-12
+Secondary:   배경 #ecfdf5, 텍스트 #14532d, rounded-[14px], h-12
+Ghost:       배경 transparent, 호버 muted, rounded-[14px]
+Destructive: 배경 #EF4444, 텍스트 #FFFFFF, rounded-[14px]
+터치 타겟:   최소 h-9 w-9 (36px), 삭제/설정 h-10 (40px)
 ```
 
 ### 입력 필드
 
 ```
-배경:          #FFFFFF
-테두리:        1px #E5E8EB
-모서리:        12px
-포커스:        테두리 #2D6A4F + 배경 #E8F0EC
-높이:          48px
-플레이스홀더:  #8B95A1
+배경:          #F9FAFB (bg-input)
+테두리:        없음 (border-0, borderless)
+모서리:        14px (rounded-[14px])
+높이:          h-12
+플레이스홀더:  text-muted-foreground
+정렬:          좌측 정렬 (text-center 지양 — 모바일 커서 위치 혼란)
 ```
 
-### 별점 (StarRating)
+### 뱃지 (Badge)
 
 ```
-아이콘:        Star (Lucide)
-활성 색상:     #C9A96E (크래프트베이지)
-비활성 색상:   #E5E8EB
-크기:          24px (입력) / 16px (표시)
+모서리:        rounded-full
+variant:
+  default   — bg-primary text-primary-foreground
+  secondary — bg-secondary text-secondary-foreground
 ```
 
-### 상태 배지 (StatusBadge)
+### 삭제 확인 (AlertDialog)
 
 ```
-읽는 중:       배경 #E8F0EC, 텍스트 #2D6A4F
-완독:          배경 #E8F5E9, 텍스트 #66BB6A
-읽고 싶은:     배경 #F5F0E5, 텍스트 #C9A96E
+모든 삭제 작업:  AlertDialog 통일 (세션/위시리스트/멤버/댓글)
+제목:            "정말 삭제하시겠습니까?"
+취소:            Secondary 버튼
+확인:            Destructive 버튼
 ```
 
 ---
 
 ## 6. UI 라이브러리
 
-| 용도       | 선택               | 비고                             |
-| ---------- | ------------------ | -------------------------------- |
-| 컴포넌트   | shadcn/ui          | 커스터마이징 자유, Radix UI 기반 |
-| 아이콘     | Lucide Icons       | 부드러운 라인 아이콘             |
-| 애니메이션 | Framer Motion      | 페이지 전환, 스트리밍 텍스트     |
-| 차트       | Recharts (Phase 2) | 독서 통계 시각화                 |
+| 용도     | 선택         | 비고                             |
+| -------- | ------------ | -------------------------------- |
+| 컴포넌트 | shadcn/ui    | 커스터마이징 자유, Radix UI 기반 |
+| 아이콘   | Lucide Icons | 부드러운 라인 아이콘             |
+| 차트     | Recharts     | 발제자 통계, 연간 모임 차트      |
 
 ---
 
-## 7. 핵심 뷰
+## 7. 핵심 뷰 (V3)
 
-### 7.1 로그인 (/login)
+### 7.1 접속 페이지 (/)
 
 - 서비스 로고 + "독서를 두드리다" 카피
-- 초대 코드 입력 필드
-- 이메일 입력 필드
-- Magic Link 발송 버튼 (포레스트그린)
-- 깔끔하고 여백 충분한 레이아웃
+- 모임 이름 입력
+- 접속 코드 입력
+- 접속 버튼 (primary 그린)
 
-### 7.2 홈 (/(main)/home)
+### 7.2 책장 (/club/[id])
 
-- "안녕, {닉네임}님" 인사 (22px)
-- 최근 기록 카드 3개 (수평 스크롤 또는 리스트)
-- 간단 통계: 이번 달 읽은 책 수, 총 기록 수
-- 빈 상태: "첫 번째 독서 기록을 남겨보세요"
+- 세션 카드 그리드 (책 표지 + 제목 + 날짜)
+- 빈 상태: "아직 모임 기록이 없어요"
+- FAB: 새 모임 기록 작성
 
-### 7.3 기록 작성 (/(main)/record/new)
+### 7.3 타임라인 (/club/[id]/timeline)
 
-- 도서 검색 -> 선택
-- 상태 선택 (읽는 중/완독/읽고 싶은)
-- 감상 입력 (textarea, 1000자)
-- 인용 입력 (textarea, 500자)
-- 별점 입력 (1~5)
-- 카드 배경색 선택 (6색)
-- 저장 버튼
+- 세로 타임라인 (날짜 + 책 + 발제자)
+- 모임 회차 자동 계산
 
-### 7.4 기록 상세
+### 7.4 읽고 싶은 책 (/club/[id]/wishlist)
 
-- 기록 카드 (풀 화면)
-- 수정/삭제 버튼
-- AI 기능 버튼 (요약, 토론 주제, 분석)
+- 위시리스트 카드 (책 표지 + 제목 + 저자)
+- 카카오 도서 검색 → 추가
+- 댓글 기능
 
-### 7.5 대화형 기록 (InterviewChat)
+### 7.5 프로필 (/club/[id]/profile)
 
-- AI 질문 -> 사용자 답변 -> 다음 질문 (3~5회)
-- 채팅 형태 UI
-- 완료 시 기록 초안 자동 생성
-- 초안 수정 후 저장
+- 모임 통계 (총 모임, 발제 횟수, 참여율)
+- 발제자 통계 차트 (수평 막대)
+- 연간 모임 차트
+- 멤버 관리
 
-### 7.6 독서 모임 (/(main)/groups)
+### 7.6 세션 상세 (/club/[id]/session/[sid])
 
-- 내 모임 목록 (카드형)
-- 모임 상세: 세션 목록 + 멤버 목록
-- 세션 상세: 책 정보 + 후기 목록
-
-### 7.7 프로필 (/(main)/profile)
-
-- 닉네임 + 간단 통계
-- 내 기록 전체 목록 (무한 스크롤)
-- 설정 (닉네임 수정, 로그아웃)
+- 책 정보 (표지 + 제목 + 저자)
+- 모임 정보 (회차, 날짜, 발제자, 참여자)
+- 발제문, 모임 내용
+- 사진 갤러리 (Lightbox + 스와이프)
+- 댓글
 
 ---
 
 ## 8. 빈 상태 (Empty State)
 
-| 상황           | 메시지                    | 서브 텍스트                              |
-| -------------- | ------------------------- | ---------------------------------------- |
-| 기록 없음      | "아직 기록이 없어요"      | "첫 독서 기록을 남겨보세요"              |
-| 검색 결과 없음 | "검색 결과가 없어요"      | "다른 키워드로 다시 검색해 보세요"       |
-| 모임 없음      | "참여 중인 모임이 없어요" | "모임을 만들거나 초대 코드로 참여하세요" |
-| 후기 없음      | "아직 후기가 없어요"      | "이번 세션은 어떠셨나요?"                |
-
-- 아이콘: Lucide 아이콘 (64px, muted 색상)
-- CTA 버튼: 포레스트그린 primary
+| 상황            | 메시지                        | 서브 텍스트                      |
+| --------------- | ----------------------------- | -------------------------------- |
+| 세션 없음       | "아직 모임 기록이 없어요"     | "첫 모임 기록을 남겨보세요"      |
+| 위시리스트 없음 | "읽고 싶은 책을 추가해보세요" | "책을 검색해서 추가할 수 있어요" |
+| 댓글 없음       | "아직 댓글이 없어요"          | "첫 댓글을 남겨보세요"           |
 
 ---
 
-## 9. 마이크로 인터랙션
-
-| 이벤트    | 효과                            |
-| --------- | ------------------------------- |
-| 기록 저장 | 토스트: "기록이 저장되었습니다" |
-| 기록 삭제 | 확인 다이얼로그 -> 토스트       |
-| 별점 입력 | 별이 채워지는 애니메이션        |
-| AI 응답   | 스트리밍 타이핑 효과            |
-| 탭 전환   | 부드러운 하이라이트 이동        |
-| 카드 탭   | 미세한 scale(0.98) -> scale(1)  |
-| 로딩      | 스켈레톤 UI (Shimmer)           |
-
----
-
-## 10. 접근성
+## 9. 접근성
 
 - shadcn/ui + Radix UI 기본 접근성 지원
 - 키보드 네비게이션 (Tab, Enter, Escape)
-- WCAG AA 색상 대비 (포레스트그린 #2D6A4F on white: 5.4:1, large text OK)
+- WCAG AA 색상 대비 (스타벅스 그린 #00704A on white: 5.92:1)
 - 스크린 리더 지원 (시맨틱 HTML, aria-label)
-- 포커스 링: 2px solid #2D6A4F
-- 다크 모드: 지원하지 않음 (v2 범위 외)
+- 포커스 링: ring-primary (#00704A)
+- 가로 스크롤 방지: html/body overflow-x-hidden, 텍스트 break-words
+- 터치 타겟: 최소 36px (h-9 w-9)
+- 다크 모드: 지원하지 않음

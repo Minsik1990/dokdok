@@ -58,7 +58,7 @@ npx supabase gen types typescript --local > src/lib/supabase/database.types.ts  
 - 한국어 주석/커밋 (기술 용어는 영어)
 - Tailwind 클래스 사용, inline styles 지양
 - shadcn/ui 컴포넌트 우선
-- 디자인: 독서/자연 테마 — 포레스트그린(#2D6A4F) + 크래프트베이지(#C9A96E) + 종이(#FAF8F5)
+- 디자인: 스타벅스 그린 테마 — 그린(#00704A) + 앰버(#F59E0B) + 화이트(60-30-10 법칙)
 - AI 톤: 따뜻하지만 깔끔한 조력자 (캐릭터/이모지 남발 금지)
 
 ## 협업 방식

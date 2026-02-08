@@ -3,14 +3,14 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
 const COLORS = [
-  "#4F46E5", // indigo
+  "#00704A", // green (primary)
   "#F59E0B", // amber
-  "#10B981", // green
   "#3B82F6", // blue
   "#8B5CF6", // purple
   "#EC4899", // pink
   "#F97316", // orange
   "#14B8A6", // teal
+  "#6366F1", // violet
 ];
 
 interface PresenterChartProps {

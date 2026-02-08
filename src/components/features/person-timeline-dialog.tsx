@@ -46,13 +46,13 @@ export function PersonTimelineDialog({
         ) : (
           <div className="relative mt-2">
             {/* 연속 세로선 — 첫 번째 점 중심 ~ 마지막 점 중심 */}
-            <div className="absolute top-[36px] bottom-[36px] left-[14px] w-0.5 bg-indigo-100" />
+            <div className="absolute top-[36px] bottom-[36px] left-[14px] w-0.5 bg-green-100" />
 
             {sessions.map((s) => (
               <Link
                 key={s.id}
                 href={`/club/${clubId}/session/${s.id}`}
-                className="group relative flex gap-3 rounded-[14px] p-2 transition-colors hover:bg-indigo-50/50"
+                className="group relative flex gap-3 rounded-[14px] p-2 transition-colors hover:bg-green-50/50"
               >
                 {/* 타임라인 점 — 세로 가운데 정렬 */}
                 <div className="flex w-[14px] shrink-0 items-center justify-center self-stretch">
@@ -78,7 +78,7 @@ export function PersonTimelineDialog({
 
                 {/* 세션 정보 */}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium group-hover:text-indigo-600">
+                  <p className="truncate text-sm font-medium group-hover:text-green-700">
                     {s.book?.title ?? "책 미정"}
                   </p>
                   {s.book?.author && (
