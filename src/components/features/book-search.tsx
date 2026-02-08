@@ -143,7 +143,7 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
               </div>
             )}
 
-            <Button onClick={handleConfirm} className="w-full rounded-[14px]">
+            <Button type="button" onClick={handleConfirm} className="w-full rounded-[14px]">
               <Plus className="mr-2 h-4 w-4" />이 책 추가하기
             </Button>
           </div>
