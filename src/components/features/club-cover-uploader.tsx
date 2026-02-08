@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { Camera, Loader2, Users } from "lucide-react";
+import { compressImage } from "@/lib/compress-image";
 
 interface ClubCoverUploaderProps {
   clubId: string;
@@ -25,8 +26,9 @@ export function ClubCoverUploader({ clubId, initialUrl }: ClubCoverUploaderProps
 
     setUploading(true);
     try {
+      const compressed = await compressImage(file);
       const formData = new FormData();
-      formData.append("cover", file);
+      formData.append("cover", compressed);
 
       const res = await fetch(`/api/club/${clubId}/cover`, {
         method: "POST",

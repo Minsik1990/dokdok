@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { Camera, ChevronLeft, ChevronRight, GripVertical, Loader2, X } from "lucide-react";
+import { compressImage } from "@/lib/compress-image";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -202,8 +203,11 @@ export function PhotoUploader({ clubId, sessionId, initialPhotos }: PhotoUploade
     setUploading(true);
 
     try {
+      // 업로드 전 이미지 압축 (1920px, WebP, ~300-500KB)
+      const compressed = await Promise.all(files.map((f) => compressImage(f)));
+
       const formData = new FormData();
-      for (const file of files) {
+      for (const file of compressed) {
         formData.append("photos", file);
       }
 
