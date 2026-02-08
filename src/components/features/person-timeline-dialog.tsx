@@ -38,10 +38,7 @@ export function PersonTimelineDialog({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-h-[80vh] overflow-y-auto rounded-[20px] sm:max-w-md">
         <DialogTitle className="text-base font-bold">
-          {name}님의{" "}
-          {isPresenter
-            ? `발제 기록 (${sessions.length}회)`
-            : `참여 기록 (${sessions.length}회, ${bookCount}권)`}
+          {name}님의 {isPresenter ? `발제 기록 (${sessions.length}회)` : `읽은 책 (${bookCount}권)`}
         </DialogTitle>
 
         {sessions.length === 0 ? (
