@@ -37,9 +37,9 @@ export function ClubHeader({ clubId, clubName }: ClubHeaderProps) {
           <Image
             src="/logo-header.png"
             alt="독독"
-            width={120}
-            height={40}
-            className="h-8 w-auto shrink-0"
+            width={100}
+            height={28}
+            className="h-7 w-auto shrink-0"
           />
           <div className="bg-border h-4 w-px shrink-0" />
           <h1 className="text-foreground truncate text-sm font-semibold">{clubName}</h1>
