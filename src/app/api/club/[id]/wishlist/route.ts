@@ -28,7 +28,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
 
   const body = await request.json();
-  const { isbn, title, author, publisher, coverUrl, description } = body;
+  const { isbn, title, author, publisher, coverUrl, description, infoUrl } = body;
 
   if (!title?.trim()) {
     return NextResponse.json({ error: "책 제목이 필요합니다." }, { status: 400 });
@@ -61,6 +61,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         publisher: publisher || null,
         cover_image_url: coverUrl || null,
         description: description || null,
+        info_url: infoUrl || null,
         api_source: "kakao",
       })
       .select("id")

@@ -39,7 +39,7 @@ export function MemberBooksSection({ memberStats, sessions, clubId }: MemberBook
 
   return (
     <Card className="rounded-[20px]">
-      <CardContent className="pt-6">
+      <CardContent>
         <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold">
           <BookOpen className="text-primary h-4 w-4" />
           우리가 함께 읽은 책

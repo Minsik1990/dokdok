@@ -1,10 +1,20 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { MessageCircle, Send, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface Comment {
   id: string;
@@ -38,7 +48,18 @@ export function SessionComments({ clubId, sessionId }: SessionCommentsProps) {
   const [content, setContent] = useState("");
   const [sending, setSending] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current);
+      }
+    };
+  }, []);
 
   const loadComments = useCallback(async () => {
     try {
@@ -80,6 +101,27 @@ export function SessionComments({ clubId, sessionId }: SessionCommentsProps) {
       setError("네트워크 오류가 발생했습니다.");
     } finally {
       setDeleting(null);
+    }
+  }
+
+  function confirmDelete() {
+    const targetId = deleteTargetId;
+    setDeleteTargetId(null);
+    if (targetId) {
+      handleDelete(targetId);
+    }
+  }
+
+  function handleTouchStart(commentId: string) {
+    longPressTimer.current = setTimeout(() => {
+      setDeleteTargetId(commentId);
+    }, 500);
+  }
+
+  function handleTouchEnd() {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
     }
   }
 
@@ -131,26 +173,32 @@ export function SessionComments({ clubId, sessionId }: SessionCommentsProps) {
       {comments.length > 0 ? (
         <div className="space-y-3">
           {comments.map((c) => (
-            <div key={c.id} className="bg-input group/comment rounded-[14px] p-3">
+            <div
+              key={c.id}
+              className="bg-input group/comment rounded-[14px] p-3 select-none"
+              onTouchStart={() => handleTouchStart(c.id)}
+              onTouchEnd={handleTouchEnd}
+              onTouchMove={handleTouchEnd}
+              onContextMenu={(e) => e.preventDefault()}
+            >
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">{c.author}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground text-xs">{timeAgo(c.created_at)}</span>
                   <button
                     type="button"
-                    onClick={() => {
-                      if (window.confirm("이 후기를 삭제하시겠습니까?")) {
-                        handleDelete(c.id);
-                      }
-                    }}
+                    aria-label="후기 삭제"
+                    onClick={() => setDeleteTargetId(c.id)}
                     disabled={deleting === c.id}
-                    className="text-muted-foreground hover:text-destructive opacity-0 transition-opacity group-hover/comment:opacity-100"
+                    className="text-muted-foreground hover:text-destructive hidden transition-opacity sm:block sm:opacity-0 sm:group-hover/comment:opacity-100"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
-              <p className="text-foreground/80 mt-1 text-sm whitespace-pre-wrap">{c.content}</p>
+              <p className="text-foreground/80 mt-1 text-sm whitespace-pre-wrap select-text">
+                {c.content}
+              </p>
             </div>
           ))}
         </div>
@@ -188,6 +236,26 @@ export function SessionComments({ clubId, sessionId }: SessionCommentsProps) {
         </div>
         {error && <p className="text-destructive text-center text-sm">{error}</p>}
       </form>
+
+      <AlertDialog
+        open={!!deleteTargetId}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTargetId(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>삭제 확인</AlertDialogTitle>
+            <AlertDialogDescription>이 후기를 삭제하시겠습니까?</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>취소</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" onClick={confirmDelete}>
+              삭제
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

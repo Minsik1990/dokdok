@@ -148,7 +148,7 @@ export default function SettingsPage() {
 
       {/* 접속 코드 */}
       <Card className="rounded-[20px]">
-        <CardContent className="space-y-3 pt-6">
+        <CardContent className="space-y-3">
           <Label>접속 코드</Label>
           <div className="flex items-center gap-2">
             <Input
@@ -174,7 +174,7 @@ export default function SettingsPage() {
 
       {/* 모임 정보 수정 */}
       <Card className="rounded-[20px]">
-        <CardContent className="space-y-4 pt-6">
+        <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <Label>모임 정보</Label>
             {!editing && (
@@ -277,7 +277,7 @@ export default function SettingsPage() {
 
       {/* 위험 영역 */}
       <Card className="rounded-[20px] border-red-200">
-        <CardContent className="space-y-3 pt-6">
+        <CardContent className="space-y-3">
           <Label className="text-destructive">위험 영역</Label>
 
           {/* 나가기 */}

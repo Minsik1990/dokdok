@@ -33,7 +33,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   // 책 정보가 있으면 books 테이블에 upsert
   let bookId: string | null = null;
   if (body.book) {
-    const { isbn, title, author, publisher, coverUrl, description } = body.book;
+    const { isbn, title, author, publisher, coverUrl, description, infoUrl } = body.book;
 
     // ISBN으로 기존 책 조회
     if (isbn) {
@@ -59,6 +59,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
           publisher,
           cover_image_url: coverUrl || null,
           description: description || null,
+          info_url: infoUrl || null,
         })
         .select("id")
         .single();

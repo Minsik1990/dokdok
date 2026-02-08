@@ -62,6 +62,7 @@ export async function GET(request: NextRequest) {
         isbn,
         coverUrl: doc.thumbnail,
         description: doc.contents,
+        infoUrl: doc.url,
         pubdate: doc.datetime ? doc.datetime.split("T")[0].replace(/-/g, "") : "",
       };
     });

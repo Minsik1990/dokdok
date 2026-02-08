@@ -112,7 +112,7 @@ export default function HomePage() {
 
         {/* 접속 입력 */}
         <Card className="rounded-[20px]">
-          <CardContent className="space-y-4 pt-6">
+          <CardContent className="space-y-4">
             <form onSubmit={handleSubmit} className="space-y-3">
               <Input
                 placeholder="모임 이름"

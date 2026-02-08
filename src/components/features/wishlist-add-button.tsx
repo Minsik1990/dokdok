@@ -21,6 +21,7 @@ export function WishlistAddButton({ clubId }: WishlistAddButtonProps) {
     isbn: string;
     coverUrl: string;
     description: string;
+    infoUrl?: string;
   }) {
     setAdding(true);
     setError("");
@@ -36,6 +37,7 @@ export function WishlistAddButton({ clubId }: WishlistAddButtonProps) {
           publisher: book.publisher,
           coverUrl: book.coverUrl,
           description: book.description,
+          infoUrl: book.infoUrl,
         }),
       });
 

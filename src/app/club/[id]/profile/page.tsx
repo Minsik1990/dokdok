@@ -119,7 +119,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     <div className="space-y-6">
       {/* 모임 정보 */}
       <Card className="rounded-[20px]">
-        <CardContent className="flex items-center gap-4 pt-6">
+        <CardContent className="flex items-center gap-4">
           <ClubCoverUploader clubId={clubId} initialUrl={club?.cover_image_url ?? null} />
           <div className="min-w-0 flex-1">
             <h2 className="text-lg font-bold">{club?.name ?? "모임"}</h2>
@@ -144,7 +144,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
 
       {/* 지금 함께하는 사람 */}
       <Card className="rounded-[20px]">
-        <CardContent className="pt-6">
+        <CardContent>
           <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold">
             <Users className="text-primary h-4 w-4" />
             지금 함께하는 사람
@@ -176,7 +176,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
 
       {/* 모임 사진 */}
       <Card className="rounded-[20px]">
-        <CardContent className="pt-6">
+        <CardContent>
           <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold">
             <ImageIcon className="text-primary h-4 w-4" />
             모임 사진 {allPhotos.length > 0 && `(${allPhotos.length})`}

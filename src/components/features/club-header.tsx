@@ -32,15 +32,22 @@ export function ClubHeader({ clubId, clubName }: ClubHeaderProps) {
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl">
       {/* 상단 헤더 */}
-      <div className="relative flex items-center justify-between px-4 py-3">
-        <h1 className="text-foreground text-lg font-bold">{clubName}</h1>
-        {/* 중앙 로고 */}
-        <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-          <Image src="/logo-header.png" alt="독독" width={80} height={28} className="h-7 w-auto" />
-        </Link>
+      <div className="flex items-center gap-3 px-4 py-3">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <Image
+            src="/logo-header.png"
+            alt="독독"
+            width={80}
+            height={28}
+            className="h-6 w-auto shrink-0"
+          />
+          <div className="bg-border h-4 w-px shrink-0" />
+          <h1 className="text-foreground truncate text-sm font-semibold">{clubName}</h1>
+        </div>
         <Link
           href={`${basePath}/settings`}
-          className="text-muted-foreground hover:bg-muted flex h-9 w-9 items-center justify-center rounded-full transition-colors"
+          aria-label="모임 설정"
+          className="text-muted-foreground hover:bg-muted ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors"
         >
           <Settings className="h-5 w-5" />
         </Link>
@@ -52,6 +59,7 @@ export function ClubHeader({ clubId, clubName }: ClubHeaderProps) {
           <Link
             key={tab.label}
             href={`${basePath}${tab.href}`}
+            aria-current={isActive(tab.href) ? "page" : undefined}
             className={cn(
               "flex-1 py-2.5 text-center text-sm font-medium transition-colors",
               isActive(tab.href)

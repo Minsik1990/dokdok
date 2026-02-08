@@ -5,6 +5,16 @@ import { X, Plus, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface MemberManagerProps {
   clubId: string;
@@ -17,6 +27,7 @@ export function MemberManager({ clubId, initialMembers }: MemberManagerProps) {
   const inputRef = useRef("");
   const [adding, setAdding] = useState(false);
   const [removing, setRemoving] = useState<string | null>(null);
+  const [deleteTargetName, setDeleteTargetName] = useState<string | null>(null);
 
   async function handleAdd() {
     const name = (inputRef.current || input).trim();
@@ -70,6 +81,14 @@ export function MemberManager({ clubId, initialMembers }: MemberManagerProps) {
     }
   }
 
+  function confirmRemove() {
+    const targetName = deleteTargetName;
+    setDeleteTargetName(null);
+    if (targetName) {
+      handleRemove(targetName);
+    }
+  }
+
   return (
     <div className="space-y-3">
       {members.length > 0 && (
@@ -79,7 +98,7 @@ export function MemberManager({ clubId, initialMembers }: MemberManagerProps) {
               {m}
               <button
                 type="button"
-                onClick={() => handleRemove(m)}
+                onClick={() => setDeleteTargetName(m)}
                 disabled={removing === m}
                 className="hover:bg-muted rounded-full p-0.5"
               >
@@ -127,6 +146,28 @@ export function MemberManager({ clubId, initialMembers }: MemberManagerProps) {
           {adding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
         </Button>
       </div>
+
+      <AlertDialog
+        open={!!deleteTargetName}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTargetName(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>삭제 확인</AlertDialogTitle>
+            <AlertDialogDescription>
+              &apos;{deleteTargetName}&apos; 멤버를 삭제하시겠습니까?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>취소</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" onClick={confirmRemove}>
+              삭제
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

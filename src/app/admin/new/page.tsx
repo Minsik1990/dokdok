@@ -92,7 +92,7 @@ export default function AdminNewPage() {
         </div>
 
         <Card className="rounded-[20px]">
-          <CardContent className="space-y-4 pt-6">
+          <CardContent className="space-y-4">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
                 <Label htmlFor="name">모임 이름 *</Label>

@@ -15,7 +15,7 @@ export function YearlyMeetingChart({ data }: YearlyMeetingChartProps) {
   if (data.length === 1) {
     return (
       <Card className="rounded-[20px]">
-        <CardContent className="pt-6">
+        <CardContent>
           <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold">
             <Calendar className="text-primary h-4 w-4" />
             연간 모임
@@ -31,7 +31,7 @@ export function YearlyMeetingChart({ data }: YearlyMeetingChartProps) {
 
   return (
     <Card className="rounded-[20px]">
-      <CardContent className="pt-6">
+      <CardContent>
         <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold">
           <Calendar className="text-primary h-4 w-4" />
           연간 모임

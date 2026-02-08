@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { BookOpen } from "lucide-react";
+import { BookOpen, ExternalLink } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { DeleteWishlistButton } from "@/components/features/delete-wishlist-button";
 import { WishlistComments } from "@/components/features/wishlist-comments";
@@ -17,6 +17,7 @@ interface WishlistWithBook {
     publisher: string | null;
     cover_image_url: string | null;
     description: string | null;
+    info_url: string | null;
   } | null;
 }
 
@@ -31,7 +32,7 @@ export default async function WishlistDetailPage({
   const { data } = await supabase
     .from("wishlist_books")
     .select(
-      "id, club_id, created_at, books(id, title, author, publisher, cover_image_url, description)"
+      "id, club_id, created_at, books(id, title, author, publisher, cover_image_url, description, info_url)"
     )
     .eq("id", wid)
     .eq("club_id", clubId)
@@ -80,6 +81,17 @@ export default async function WishlistDetailPage({
         <div className="bg-card rounded-[20px] p-4 shadow-sm">
           <h3 className="text-foreground mb-2 text-sm font-semibold">책 소개</h3>
           <ExpandableText text={book.description} maxLines={4} />
+          {book.info_url && (
+            <a
+              href={book.info_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary mt-2 inline-flex items-center gap-1 text-sm font-medium"
+            >
+              다음에서 전체 소개 보기
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          )}
         </div>
       )}
 

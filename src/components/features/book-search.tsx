@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Search, ArrowLeft, Plus, BookOpen } from "lucide-react";
+import { Search, ArrowLeft, Plus, BookOpen, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,6 +20,7 @@ interface BookResult {
   isbn: string;
   coverUrl: string;
   description: string;
+  infoUrl: string;
   pubdate: string;
 }
 
@@ -128,6 +129,17 @@ export function BookSearch({ onSelect, trigger }: BookSearchProps) {
                 <p className="text-foreground/80 text-sm leading-relaxed whitespace-pre-wrap">
                   {selectedBook.description}
                 </p>
+                {selectedBook.infoUrl && (
+                  <a
+                    href={selectedBook.infoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary mt-2 inline-flex items-center gap-1 text-sm font-medium"
+                  >
+                    다음에서 전체 소개 보기
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </div>
             )}
 

@@ -44,7 +44,7 @@ export async function PUT(
   // 책 정보 업데이트
   let bookId: string | null = body.bookId ?? null;
   if (body.book) {
-    const { isbn, title, author, publisher, coverUrl, description } = body.book;
+    const { isbn, title, author, publisher, coverUrl, description, infoUrl } = body.book;
 
     if (isbn) {
       const { data: existing } = await supabase
@@ -68,6 +68,7 @@ export async function PUT(
           publisher,
           cover_image_url: coverUrl || null,
           description: description || null,
+          info_url: infoUrl || null,
         })
         .select("id")
         .single();
