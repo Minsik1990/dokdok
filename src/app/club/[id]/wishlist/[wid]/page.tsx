@@ -16,7 +16,6 @@ interface WishlistWithBook {
     publisher: string | null;
     cover_image_url: string | null;
     description: string | null;
-    info_url: string | null;
     isbn: string | null;
   } | null;
 }
@@ -32,7 +31,7 @@ export default async function WishlistDetailPage({
   const { data } = await supabase
     .from("wishlist_books")
     .select(
-      "id, club_id, created_at, books(id, title, author, publisher, cover_image_url, description, info_url, isbn)"
+      "id, club_id, created_at, books(id, title, author, publisher, cover_image_url, description, isbn)"
     )
     .eq("id", wid)
     .eq("club_id", clubId)
@@ -42,6 +41,29 @@ export default async function WishlistDetailPage({
 
   const wishlist = data as unknown as WishlistWithBook;
   const book = wishlist.books;
+
+  // 카카오 API로 도서 상세 URL 실시간 조회 (책 검색과 동일한 방식)
+  let bookInfoUrl: string | null = null;
+  if (book && (book.isbn || book.title)) {
+    try {
+      const apiKey = process.env.KAKAO_REST_API_KEY;
+      if (apiKey) {
+        const q = book.isbn || book.title;
+        const res = await fetch(
+          `https://dapi.kakao.com/v3/search/book?query=${encodeURIComponent(q)}&size=1`,
+          { headers: { Authorization: `KakaoAK ${apiKey}` }, next: { revalidate: 86400 } }
+        );
+        if (res.ok) {
+          const json = await res.json();
+          if (json.documents?.[0]?.url) {
+            bookInfoUrl = json.documents[0].url;
+          }
+        }
+      }
+    } catch {
+      // API 실패 시 링크 미표시
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -83,9 +105,9 @@ export default async function WishlistDetailPage({
           <p className="text-foreground/80 text-sm leading-relaxed break-words whitespace-pre-wrap">
             {book.description}
           </p>
-          {book.info_url && (
+          {bookInfoUrl && (
             <a
-              href={book.info_url}
+              href={bookInfoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary mt-2 inline-flex items-center gap-1 text-sm font-medium"
