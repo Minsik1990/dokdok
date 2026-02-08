@@ -16,6 +16,7 @@ interface WishlistWithBook {
     publisher: string | null;
     cover_image_url: string | null;
     description: string | null;
+    info_url: string | null;
     isbn: string | null;
   } | null;
 }
@@ -31,7 +32,7 @@ export default async function WishlistDetailPage({
   const { data } = await supabase
     .from("wishlist_books")
     .select(
-      "id, club_id, created_at, books(id, title, author, publisher, cover_image_url, description, isbn)"
+      "id, club_id, created_at, books(id, title, author, publisher, cover_image_url, description, info_url, isbn)"
     )
     .eq("id", wid)
     .eq("club_id", clubId)
@@ -82,15 +83,17 @@ export default async function WishlistDetailPage({
           <p className="text-foreground/80 text-sm leading-relaxed break-words whitespace-pre-wrap">
             {book.description}
           </p>
-          <a
-            href={`https://search.daum.net/search?w=book&q=${encodeURIComponent(book.isbn || book.title)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary mt-2 inline-flex items-center gap-1 text-sm font-medium"
-          >
-            다음에서 전체 소개 보기
-            <ExternalLink className="h-3.5 w-3.5" />
-          </a>
+          {book.info_url && (
+            <a
+              href={book.info_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary mt-2 inline-flex items-center gap-1 text-sm font-medium"
+            >
+              다음에서 전체 소개 보기
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          )}
         </div>
       )}
 
