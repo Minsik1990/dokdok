@@ -52,7 +52,7 @@ export function PersonTimelineDialog({
               <Link
                 key={s.id}
                 href={`/club/${clubId}/session/${s.id}`}
-                className="group relative flex gap-3 rounded-[14px] p-2 transition-colors hover:bg-green-50/50"
+                className="group relative flex gap-3 overflow-hidden rounded-[14px] p-2 transition-colors hover:bg-green-50/50"
               >
                 {/* 타임라인 점 — 세로 가운데 정렬 */}
                 <div className="flex w-[14px] shrink-0 items-center justify-center self-stretch">
