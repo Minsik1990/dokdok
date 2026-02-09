@@ -9,6 +9,7 @@ import { MemberBooksSection } from "@/components/features/member-books-section";
 import { PresenterStatsSection } from "@/components/features/presenter-stats-section";
 import { YearlyMeetingChart } from "@/components/features/yearly-meeting-chart";
 import { TagStatsSection } from "@/components/features/tag-stats-section";
+import { CommentFeedSection } from "@/components/features/comment-feed-section";
 import type { Database } from "@/lib/supabase/database.types";
 
 type Club = Database["public"]["Tables"]["clubs"]["Row"];
@@ -23,7 +24,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     supabase
       .from("club_sessions")
       .select(
-        "id, session_date, is_counted, presenter, participants, book_id, photos, content, tags, books(title, author, cover_image_url)"
+        "id, session_date, is_counted, presenter, participants, book_id, photos, content, tags, books(title, author, cover_image_url), session_comments(id, author, content, created_at)"
       )
       .eq("club_id", clubId)
       .order("session_date", { ascending: false }),
@@ -44,6 +45,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     content: string | null;
     tags: string[] | null;
     books: { title: string; author: string | null; cover_image_url: string | null } | null;
+    session_comments:
+      | { id: string; author: string; content: string; created_at: string | null }[]
+      | null;
   }[];
   const memberNames = (membersResult.data ?? []).map((m) => m.name);
 
@@ -136,6 +140,17 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     Array.from(tagSessions.entries()).map(([tag, sessions]) => [tag, sessions])
   );
 
+  // 댓글 피드 데이터
+  const allComments = allSessions
+    .flatMap((s) =>
+      (s.session_comments ?? []).map((c) => ({
+        ...c,
+        sessionId: s.id,
+        bookTitle: s.books?.title ?? s.content?.split("\n").find((l) => l.trim()) ?? null,
+      }))
+    )
+    .sort((a, b) => new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime());
+
   // 전체 사진 수집 (최신 세션 먼저 = 갤러리와 동일)
   const allPhotos: { url: string; sessionId: string; sessionOrder: number }[] = [];
   for (let i = 0; i < allSessions.length; i++) {
@@ -216,6 +231,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
       {tagStats.length > 0 && (
         <TagStatsSection tagStats={tagStats} tagSessions={tagSessionsMap} clubId={clubId} />
       )}
+
+      {/* 댓글 피드 */}
+      {allComments.length > 0 && <CommentFeedSection comments={allComments} clubId={clubId} />}
 
       {/* 모임 사진 */}
       <Card className="rounded-[20px]">
