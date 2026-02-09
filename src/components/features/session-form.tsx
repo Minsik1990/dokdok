@@ -41,6 +41,7 @@ interface SessionFormData {
   presentationText: string;
   content: string;
   photos: string[];
+  tags: string[];
 }
 
 interface SessionFormProps {
@@ -123,6 +124,10 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
   const [existingPhotos, setExistingPhotos] = useState<string[]>(initialData?.photos ?? []);
+  const [tags, setTags] = useState<string[]>(initialData?.tags ?? []);
+  const [tagInput, setTagInput] = useState("");
+  const tagValueRef = useRef("");
+  const [existingTags, setExistingTags] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [members, setMembers] = useState<string[]>([]);
@@ -167,9 +172,20 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
     }
   }, [clubId]);
 
+  const loadTags = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/club/${clubId}/tags`);
+      const data = await res.json();
+      setExistingTags(data.tags ?? []);
+    } catch {
+      // 무시
+    }
+  }, [clubId]);
+
   useEffect(() => {
     loadMembers();
-  }, [loadMembers]);
+    loadTags();
+  }, [loadMembers, loadTags]);
 
   function addPresenter(name: string) {
     const trimmed = name.trim();
@@ -216,6 +232,28 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
     setParticipants(participants.filter((p) => p !== name));
   }
 
+  function addTag(tag: string) {
+    const trimmed = tag.trim();
+    if (trimmed && !tags.includes(trimmed)) {
+      setTags((prev) => [...prev, trimmed]);
+    }
+    setTagInput("");
+    tagValueRef.current = "";
+  }
+
+  function addTagSafe() {
+    setTimeout(() => {
+      const val = tagValueRef.current.trim() || tagInput.trim();
+      if (val) {
+        addTag(val);
+      }
+    }, 50);
+  }
+
+  function removeTag(tag: string) {
+    setTags(tags.filter((t) => t !== tag));
+  }
+
   function handlePhotoSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []);
     const totalCount = photoFiles.length + existingPhotos.length + files.length;
@@ -245,6 +283,10 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
   function removeExistingPhoto(index: number) {
     setExistingPhotos((prev) => prev.filter((_, i) => i !== index));
   }
+
+  const filteredTags = existingTags.filter(
+    (t) => t.toLowerCase().includes(tagInput.toLowerCase()) && !tags.includes(t) && t !== tagInput
+  );
 
   const filteredMembers = members.filter(
     (m) =>
@@ -282,6 +324,7 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
         presentationText,
         content,
         photos: existingPhotos,
+        tags,
       };
 
       const url = isEdit
@@ -563,6 +606,76 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
                   onClick={() => addParticipant(m)}
                 >
                   {m}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 태그 */}
+      <div className="space-y-2">
+        <Label>태그</Label>
+        {tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {tags.map((t) => (
+              <Badge key={t} variant="secondary" className="gap-1 rounded-full py-1 pr-1.5 pl-3">
+                {t}
+                <button
+                  type="button"
+                  onClick={() => removeTag(t)}
+                  className="hover:bg-muted rounded-full p-0.5"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            ))}
+          </div>
+        )}
+        <div className="relative">
+          <div className="flex gap-2">
+            <Input
+              placeholder="태그 입력 (예: 소설, 철학, 번개모임)"
+              value={tagInput}
+              onChange={(e) => {
+                setTagInput(e.target.value);
+                tagValueRef.current = e.target.value;
+              }}
+              onCompositionEnd={(e) => {
+                const val = (e.target as HTMLInputElement).value;
+                setTagInput(val);
+                tagValueRef.current = val;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                  e.preventDefault();
+                  addTagSafe();
+                }
+              }}
+              className="bg-input h-12 flex-1 border-0"
+              autoComplete="off"
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              className="h-12 shrink-0 rounded-[14px] px-4"
+              onClick={addTagSafe}
+              disabled={!tagInput.trim()}
+            >
+              추가
+            </Button>
+          </div>
+          {tagInput && filteredTags.length > 0 && (
+            <div className="bg-popover absolute top-full z-10 mt-1 w-full rounded-[14px] border p-1 shadow-lg">
+              {filteredTags.slice(0, 5).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  className="hover:bg-muted w-full rounded-lg px-3 py-2 text-left text-sm"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => addTag(t)}
+                >
+                  {t}
                 </button>
               ))}
             </div>

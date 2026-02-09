@@ -12,6 +12,7 @@ interface SessionWithBook {
   presenter: string[] | null;
   participants: string[];
   content: string | null;
+  tags: string[] | null;
   books: {
     title: string;
     author: string | null;
@@ -31,7 +32,7 @@ export default async function TimelinePage({ params }: { params: Promise<{ id: s
   const { data: sessions } = await supabase
     .from("club_sessions")
     .select(
-      "id, session_number, session_date, is_counted, presenter, participants, content, books(title, author, cover_image_url)"
+      "id, session_number, session_date, is_counted, presenter, participants, content, tags, books(title, author, cover_image_url)"
     )
     .eq("club_id", clubId)
     .order("session_date", { ascending: false });
@@ -110,6 +111,18 @@ export default async function TimelinePage({ params }: { params: Promise<{ id: s
                 </span>
               )}
             </div>
+            {session.tags && session.tags.length > 0 && (
+              <div className="mt-1.5 flex flex-wrap gap-1">
+                {session.tags.map((tag: string) => (
+                  <span
+                    key={tag}
+                    className="bg-secondary text-secondary-foreground rounded-full px-2 py-0.5 text-[11px]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </Link>
       ))}

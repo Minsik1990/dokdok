@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Calendar, User, Users, BookOpen, Pencil } from "lucide-react";
+import { Calendar, User, Users, BookOpen, Pencil, Tag } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { DeleteSessionButton } from "@/components/features/delete-session-button";
@@ -168,6 +168,25 @@ export default async function SessionDetailPage({
           initialPhotos={(session.photos as string[] | null) ?? []}
         />
       </div>
+
+      {/* 태그 */}
+      {session.tags && session.tags.length > 0 && (
+        <div className="bg-card rounded-[20px] p-4 shadow-sm">
+          <div className="flex items-start gap-2 text-sm">
+            <Tag className="text-primary mt-0.5 h-4 w-4" />
+            <div>
+              <span className="font-medium">태그:</span>
+              <div className="mt-1 flex flex-wrap gap-1">
+                {session.tags.map((tag: string) => (
+                  <Badge key={tag} variant="secondary" className="rounded-full text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 후기/댓글 */}
       <div className="bg-card rounded-[20px] p-4 shadow-sm">

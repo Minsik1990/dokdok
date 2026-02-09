@@ -211,7 +211,7 @@ function getKSTDate() {
 function daysBetween(startStr: string, endStr: string) {
   const start = new Date(startStr);
   const end = new Date(endStr);
-  return Math.max(Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)), 1);
+  return Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 }
 
 function formatDate(dateStr: string) {

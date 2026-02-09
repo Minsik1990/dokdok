@@ -114,6 +114,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       content: body.content || null,
       photos: body.photos || [],
       is_counted: body.isCounted ?? true,
+      tags: Array.isArray(body.tags)
+        ? body.tags
+            .filter((t: unknown) => typeof t === "string")
+            .map((t: string) => t.trim())
+            .filter((t: string) => t.length > 0 && t.length <= 50)
+            .slice(0, 20)
+        : [],
     })
     .select()
     .single();

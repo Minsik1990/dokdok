@@ -64,6 +64,7 @@ export type Database = {
           presenter: string[] | null
           session_date: string
           session_number: number | null
+          tags: string[] | null
           updated_at: string | null
         }
         Insert: {
@@ -79,6 +80,7 @@ export type Database = {
           presenter?: string[] | null
           session_date: string
           session_number?: number | null
+          tags?: string[] | null
           updated_at?: string | null
         }
         Update: {
@@ -94,6 +96,7 @@ export type Database = {
           presenter?: string[] | null
           session_date?: string
           session_number?: number | null
+          tags?: string[] | null
           updated_at?: string | null
         }
         Relationships: [

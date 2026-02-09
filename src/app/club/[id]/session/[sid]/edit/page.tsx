@@ -46,6 +46,7 @@ export default async function EditSessionPage({
     presentationText: session.presentation_text ?? "",
     content: session.content ?? "",
     photos: session.photos ?? [],
+    tags: (session.tags as string[] | null) ?? [],
   };
 
   return (
