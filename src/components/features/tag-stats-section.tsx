@@ -30,7 +30,7 @@ export function TagStatsSection({ tagStats, tagSessions, clubId }: TagStatsSecti
               role="participant"
               sessions={tagSessions[t.tag] ?? []}
               clubId={clubId}
-              customTitle={`${t.tag} (${t.count}회)`}
+              customTitle={`${t.tag} (${t.count}개)`}
               trigger={
                 <button
                   type="button"
@@ -39,7 +39,7 @@ export function TagStatsSection({ tagStats, tagSessions, clubId }: TagStatsSecti
                   <Badge variant="secondary" className="gap-1.5 rounded-full py-1.5 pr-2.5 pl-3">
                     {t.tag}
                     <span className="bg-primary/10 text-primary inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-bold">
-                      {t.count}회
+                      {t.count}개
                     </span>
                   </Badge>
                 </button>
