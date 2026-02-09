@@ -613,76 +613,6 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
         </div>
       </div>
 
-      {/* 태그 */}
-      <div className="space-y-2">
-        <Label>태그</Label>
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {tags.map((t) => (
-              <Badge key={t} variant="secondary" className="gap-1 rounded-full py-1 pr-1.5 pl-3">
-                {t}
-                <button
-                  type="button"
-                  onClick={() => removeTag(t)}
-                  className="hover:bg-muted rounded-full p-0.5"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </Badge>
-            ))}
-          </div>
-        )}
-        <div className="relative">
-          <div className="flex gap-2">
-            <Input
-              placeholder="태그 입력 (예: 소설, 철학, 번개모임)"
-              value={tagInput}
-              onChange={(e) => {
-                setTagInput(e.target.value);
-                tagValueRef.current = e.target.value;
-              }}
-              onCompositionEnd={(e) => {
-                const val = (e.target as HTMLInputElement).value;
-                setTagInput(val);
-                tagValueRef.current = val;
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.nativeEvent.isComposing) {
-                  e.preventDefault();
-                  addTagSafe();
-                }
-              }}
-              className="bg-input h-12 flex-1 border-0"
-              autoComplete="off"
-            />
-            <Button
-              type="button"
-              variant="secondary"
-              className="h-12 shrink-0 rounded-[14px] px-4"
-              onClick={addTagSafe}
-              disabled={!tagInput.trim()}
-            >
-              추가
-            </Button>
-          </div>
-          {tagInput && filteredTags.length > 0 && (
-            <div className="bg-popover absolute top-full z-10 mt-1 w-full rounded-[14px] border p-1 shadow-lg">
-              {filteredTags.slice(0, 5).map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  className="hover:bg-muted w-full rounded-lg px-3 py-2 text-left text-sm"
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => addTag(t)}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* 발제문 */}
       <div className="space-y-2">
         <Label htmlFor="presentationText">발제문</Label>
@@ -768,6 +698,76 @@ export function SessionForm({ clubId, initialData, sessionId }: SessionFormProps
             />
           </>
         )}
+      </div>
+
+      {/* 태그 */}
+      <div className="space-y-2">
+        <Label>태그</Label>
+        {tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {tags.map((t) => (
+              <Badge key={t} variant="secondary" className="gap-1 rounded-full py-1 pr-1.5 pl-3">
+                {t}
+                <button
+                  type="button"
+                  onClick={() => removeTag(t)}
+                  className="hover:bg-muted rounded-full p-0.5"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            ))}
+          </div>
+        )}
+        <div className="relative">
+          <div className="flex gap-2">
+            <Input
+              placeholder="태그 입력"
+              value={tagInput}
+              onChange={(e) => {
+                setTagInput(e.target.value);
+                tagValueRef.current = e.target.value;
+              }}
+              onCompositionEnd={(e) => {
+                const val = (e.target as HTMLInputElement).value;
+                setTagInput(val);
+                tagValueRef.current = val;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                  e.preventDefault();
+                  addTagSafe();
+                }
+              }}
+              className="bg-input h-12 flex-1 border-0"
+              autoComplete="off"
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              className="h-12 shrink-0 rounded-[14px] px-4"
+              onClick={addTagSafe}
+              disabled={!tagInput.trim()}
+            >
+              추가
+            </Button>
+          </div>
+          {tagInput && filteredTags.length > 0 && (
+            <div className="bg-popover absolute top-full z-10 mt-1 w-full rounded-[14px] border p-1 shadow-lg">
+              {filteredTags.slice(0, 5).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  className="hover:bg-muted w-full rounded-lg px-3 py-2 text-left text-sm"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => addTag(t)}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 에러 메시지 */}

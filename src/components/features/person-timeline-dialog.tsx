@@ -22,6 +22,7 @@ interface PersonTimelineDialogProps {
   sessions: SessionInfo[];
   clubId: string;
   trigger: React.ReactNode;
+  customTitle?: string;
 }
 
 export function PersonTimelineDialog({
@@ -30,6 +31,7 @@ export function PersonTimelineDialog({
   sessions,
   clubId,
   trigger,
+  customTitle,
 }: PersonTimelineDialogProps) {
   const isPresenter = role === "presenter";
   const bookCount = sessions.filter((s) => s.book).length;
@@ -39,7 +41,8 @@ export function PersonTimelineDialog({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-h-[80vh] overflow-x-hidden overflow-y-auto rounded-[20px] sm:max-w-md">
         <DialogTitle className="truncate text-base font-bold">
-          {name}님의 {isPresenter ? `발제 기록 (${sessions.length}회)` : `읽은 책 (${bookCount}권)`}
+          {customTitle ??
+            `${name}님의 ${isPresenter ? `발제 기록 (${sessions.length}회)` : `읽은 책 (${bookCount}권)`}`}
         </DialogTitle>
 
         {sessions.length === 0 ? (

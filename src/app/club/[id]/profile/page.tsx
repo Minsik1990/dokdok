@@ -8,6 +8,7 @@ import { ProfilePhotoGrid } from "@/components/features/profile-photo-grid";
 import { MemberBooksSection } from "@/components/features/member-books-section";
 import { PresenterStatsSection } from "@/components/features/presenter-stats-section";
 import { YearlyMeetingChart } from "@/components/features/yearly-meeting-chart";
+import { TagStatsSection } from "@/components/features/tag-stats-section";
 import type { Database } from "@/lib/supabase/database.types";
 
 type Club = Database["public"]["Tables"]["clubs"]["Row"];
@@ -22,7 +23,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     supabase
       .from("club_sessions")
       .select(
-        "id, session_date, is_counted, presenter, participants, book_id, photos, content, books(title, author, cover_image_url)"
+        "id, session_date, is_counted, presenter, participants, book_id, photos, content, tags, books(title, author, cover_image_url)"
       )
       .eq("club_id", clubId)
       .order("session_date", { ascending: false }),
@@ -41,6 +42,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     book_id: string | null;
     photos: string[] | null;
     content: string | null;
+    tags: string[] | null;
     books: { title: string; author: string | null; cover_image_url: string | null } | null;
   }[];
   const memberNames = (membersResult.data ?? []).map((m) => m.name);
@@ -106,6 +108,27 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
   // "우리가 함께 읽은 책" — 책이 있는 세션만
   const bookSessionsForClient = sessionsForClient.filter((s) => s.book);
 
+  // 태그 통계 (전체 세션 대상)
+  const tagCount = new Map<string, number>();
+  const tagSessions = new Map<
+    string,
+    { id: string; session_date: string; book: (typeof allSessions)[0]["books"] }[]
+  >();
+  for (const s of allSessions) {
+    const tags = s.tags ?? [];
+    for (const tag of tags) {
+      tagCount.set(tag, (tagCount.get(tag) ?? 0) + 1);
+      if (!tagSessions.has(tag)) tagSessions.set(tag, []);
+      tagSessions.get(tag)!.push({ id: s.id, session_date: s.session_date, book: s.books });
+    }
+  }
+  const tagStats = Array.from(tagCount.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count);
+  const tagSessionsMap = Object.fromEntries(
+    Array.from(tagSessions.entries()).map(([tag, sessions]) => [tag, sessions])
+  );
+
   // 전체 사진 수집 (최신 세션 먼저 = 갤러리와 동일)
   const allPhotos: { url: string; sessionId: string; sessionOrder: number }[] = [];
   for (let i = 0; i < allSessions.length; i++) {
@@ -168,6 +191,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
           sessions={bookSessionsForClient}
           clubId={clubId}
         />
+      )}
+
+      {/* 태그 통계 */}
+      {tagStats.length > 0 && (
+        <TagStatsSection tagStats={tagStats} tagSessions={tagSessionsMap} clubId={clubId} />
       )}
 
       {/* 발제 횟수 */}
