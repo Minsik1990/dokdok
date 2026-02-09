@@ -60,15 +60,26 @@ export function CommentFeedSection({ comments, clubId }: CommentFeedSectionProps
             </div>
           ))}
         </div>
-        {hasMore && (
-          <button
-            type="button"
-            onClick={() => setShowCount((prev) => prev + LOAD_MORE_COUNT)}
-            className="text-primary hover:bg-muted mt-3 w-full rounded-[14px] py-2 text-sm font-medium transition-colors"
-          >
-            더보기 ({remaining}개)
-          </button>
-        )}
+        <div className="mt-3 flex gap-2">
+          {hasMore && (
+            <button
+              type="button"
+              onClick={() => setShowCount((prev) => prev + LOAD_MORE_COUNT)}
+              className="text-primary hover:bg-muted w-full rounded-[14px] py-2 text-sm font-medium transition-colors"
+            >
+              더보기 ({remaining}개)
+            </button>
+          )}
+          {showCount > INITIAL_COUNT && (
+            <button
+              type="button"
+              onClick={() => setShowCount(INITIAL_COUNT)}
+              className="text-muted-foreground hover:bg-muted w-full rounded-[14px] py-2 text-sm font-medium transition-colors"
+            >
+              접기
+            </button>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
