@@ -21,12 +21,14 @@ interface CommentFeedSectionProps {
 }
 
 const INITIAL_COUNT = 2;
+const LOAD_MORE_COUNT = 5;
 
 export function CommentFeedSection({ comments, clubId }: CommentFeedSectionProps) {
-  const [showAll, setShowAll] = useState(false);
+  const [showCount, setShowCount] = useState(INITIAL_COUNT);
 
-  const visible = showAll ? comments : comments.slice(0, INITIAL_COUNT);
-  const hasMore = comments.length > INITIAL_COUNT;
+  const visible = comments.slice(0, showCount);
+  const remaining = comments.length - showCount;
+  const hasMore = remaining > 0;
 
   return (
     <Card className="rounded-[20px]">
@@ -58,13 +60,13 @@ export function CommentFeedSection({ comments, clubId }: CommentFeedSectionProps
             </div>
           ))}
         </div>
-        {hasMore && !showAll && (
+        {hasMore && (
           <button
             type="button"
-            onClick={() => setShowAll(true)}
+            onClick={() => setShowCount((prev) => prev + LOAD_MORE_COUNT)}
             className="text-primary hover:bg-muted mt-3 w-full rounded-[14px] py-2 text-sm font-medium transition-colors"
           >
-            더보기 ({comments.length - INITIAL_COUNT}개)
+            더보기 ({remaining}개)
           </button>
         )}
       </CardContent>
